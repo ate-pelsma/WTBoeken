@@ -13,7 +13,6 @@ public class UserService {
 	private IUserRepository userRepo;
 	
 	public void saveUser(User user) {
-		System.out.println("In Service");
 		userRepo.save(user);
 	}
 
