@@ -21,6 +21,6 @@ public class CopyEndpoint {
 
     @GetMapping("copy/all")
     public Iterable<Copy> findAll(){
-        copyService.findAll();
+        return copyService.findAll();
     }
 }
