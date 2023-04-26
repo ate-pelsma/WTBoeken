@@ -12,7 +12,6 @@ public class BookService {
     private IBookRepository bookRepo;
 
     public void saveBook(Book book){
-        System.out.printf("We zitten in boek service");
         bookRepo.save(book);
     }
 
