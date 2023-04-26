@@ -1,11 +1,14 @@
 package com.workingtalent.library.entities;
 
+import java.util.List;
+
 // import java.util.ArrayList;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -19,7 +22,10 @@ public class User {
 	private String email;
 	// private List<Reservation> = new ArrayList();
 	// private List<Book> = new ArrayList();
-	private int permissions; // TODO make ENUM
+	private int permissions;
+	
+	@OneToMany
+	private List<Reservation> reservations;
 	
 	public long getId() {
 		return id;
@@ -45,5 +51,19 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public int getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(int permissions) {
+		this.permissions = permissions;
+	}
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+	
+	
 
 }
