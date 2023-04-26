@@ -1,9 +1,11 @@
 package com.workingtalent.library.repository;
 
-import com.workingtalent.library.entities.Book;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
+import com.workingtalent.library.entities.Reservation;
+
 @Component
-public interface IBookRepository extends CrudRepository<Book, Long> {
+public interface IReservationRepository extends CrudRepository<Reservation, Long>{
+
 }
