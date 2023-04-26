@@ -13,14 +13,14 @@ public class BookEndpoint {
     @Autowired
     private BookService bookService;
 
-    @GetMapping("/createbook/{title}")
-    public void createBook(@PathVariable("title") String title){
+    @GetMapping("/book/save/{title}")
+    public void saveBook(@PathVariable("title") String title){
         Book book = new Book();
         book.setTitle(title);
-        bookService.createBook(book);
+        bookService.saveBook(book);
     }
 
-    @GetMapping("/allbooks")
+    @GetMapping("/book/all")
     public Iterable<Book> findAll(){
         return bookService.findAll();
     }

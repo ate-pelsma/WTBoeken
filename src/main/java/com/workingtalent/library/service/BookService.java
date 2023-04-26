@@ -11,7 +11,7 @@ public class BookService {
     @Autowired
     private IBookRepository bookRepo;
 
-    public void createBook(Book book){
+    public void saveBook(Book book){
         System.out.printf("We zitten in boek service");
         bookRepo.save(book);
     }
