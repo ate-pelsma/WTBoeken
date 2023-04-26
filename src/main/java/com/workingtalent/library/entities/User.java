@@ -1,6 +1,6 @@
 package com.workingtalent.library.entities;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +18,8 @@ public class User {
 	private String password;
 	private String email;
 	// private List<Reservation> = new ArrayList();
-	
+	// private List<Book> = new ArrayList();
+	private int permissions; // TODO make ENUM
 	
 	public long getId() {
 		return id;
