@@ -2,7 +2,8 @@ package com.workingtalent.library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.workingtalent.library.entities.User;
@@ -14,10 +15,8 @@ public class UserEndpoint {
 	@Autowired
 	private UserService service;
 	
-	@GetMapping("/createuser/{name}")
-	public void makeNew(@PathVariable("name") String name) {
-		User user = new User();
-		user.setName(name);
+	@PostMapping("/user/create")
+	public void createUser(@RequestBody User user) {
 		service.save(user);
 	}
 	
