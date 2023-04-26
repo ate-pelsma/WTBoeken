@@ -1,9 +1,9 @@
 package com.workingtalent.library.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Book {
@@ -16,9 +16,20 @@ public class Book {
     private String ISBN;
     private String image;
     // List<Tag> tag = new ArrayList();
-    // List<Reservation> reservation = new ArrayList();
+
+    @OneToMany
+    private List<Reservation> reservations = new ArrayList();
+
     private boolean archived;
     private int stock;
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
 
     public long getId() {
         return id;
