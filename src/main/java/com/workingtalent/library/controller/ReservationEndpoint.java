@@ -11,7 +11,7 @@ import com.workingtalent.library.entities.Reservation;
 import com.workingtalent.library.service.ReservationService;
 
 @RestController
-public class ReservationEndPoint {
+public class ReservationEndpoint {
 
 	@Autowired
 	private ReservationService reservationService;
