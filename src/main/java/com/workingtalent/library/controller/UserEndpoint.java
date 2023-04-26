@@ -13,16 +13,16 @@ import com.workingtalent.library.service.UserService;
 public class UserEndpoint {
 	
 	@Autowired
-	private UserService service;
+	private UserService userService;
 	
-	@PostMapping("/user/create")
-	public void createUser(@RequestBody User user) {
-		service.save(user);
+	@PostMapping("/user/save")
+	public void saveUser(@RequestBody User user) {
+		userService.saveUser(user);
 	}
 	
-	@GetMapping("/allusers")
+	@GetMapping("/user/all")
 	public Iterable<User> findAll() {
-		return service.findAll();
+		return userService.findAll();
 	}
 
 }

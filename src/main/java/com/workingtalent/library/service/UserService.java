@@ -10,15 +10,15 @@ import com.workingtalent.library.repository.IUserRepository;
 public class UserService {
 	
 	@Autowired
-	private IUserRepository repo;
+	private IUserRepository userRepo;
 	
-	public void save(User user) {
+	public void saveUser(User user) {
 		System.out.println("In Service");
-		repo.save(user);
+		userRepo.save(user);
 	}
 
 	public Iterable<User> findAll() {
-		return repo.findAll();
+		return userRepo.findAll();
 	}
 
 }

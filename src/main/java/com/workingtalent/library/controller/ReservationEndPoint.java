@@ -14,15 +14,14 @@ import com.workingtalent.library.service.ReservationService;
 public class ReservationEndPoint {
 
 	@Autowired
-	private ReservationService service;
+	private ReservationService reservationService;
 	
-	@GetMapping("/ReservationAanmaken/{status}")
-	public void maakEenNieuwe(@PathVariable("status") int status) 
+	@GetMapping("/reservation/save/{userid}/{bookid}")
+	public void saveReservation(@PathVariable long userid, @PathVariable long bookid)
 	{
-		Reservation reservering = new Reservation();
-		reservering.setReqDate(LocalDateTime.now());
-		reservering.setStatus(status);
-		service.opslaan(reservering);
+		Reservation reservation = new Reservation();
+		reservation.setReqDate(LocalDateTime.now());
+		reservationService.saveReservation(reservation, userid, bookid);
 	}
 	
 }
