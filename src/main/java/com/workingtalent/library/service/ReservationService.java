@@ -28,15 +28,17 @@ public class ReservationService {
 	public void saveReservation(Reservation reservation, long userid, long bookid) 
 	{
 		reservationRepo.save(reservation);
+		
 		Book book = bookRepo.findById(bookid).get();
-		User user = userRepo.findById(userid).get();
 		List<Reservation> bookReservations = book.getReservations();
-		List<Reservation> userReservations = user.getReservations();
 		bookReservations.add(reservation);
-		userReservations.add(reservation);
 		book.setReservations(bookReservations);
-		user.setReservations(userReservations);
 		bookRepo.save(book);
+		
+		User user = userRepo.findById(userid).get();
+		List<Reservation> userReservations = user.getReservations();
+		userReservations.add(reservation);
+		user.setReservations(userReservations);
 		userRepo.save(user);
 	}
 	
