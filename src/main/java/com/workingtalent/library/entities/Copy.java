@@ -1,5 +1,7 @@
 package com.workingtalent.library.entities;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +15,17 @@ public class Copy {
     @ManyToOne
     private Book book;
 
+    @OneToMany
+    private List<Loan> loans;
+
+    public List<Loan> getLoans() {
+		return loans;
+	}
+
+	public void setLoans(List<Loan> loans) {
+		this.loans = loans;
+	}
+    
     private boolean loaned;
     private boolean inactive;
 

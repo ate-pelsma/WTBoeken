@@ -18,9 +18,9 @@ public class Book {
     // List<Tag> tag = new ArrayList();
 
     @OneToMany
-    private List<Reservation> reservations = new ArrayList();
+    private List<Reservation> reservations;
 
-    private boolean archived;
+	private boolean archived;
     private int stock;
 
     public long getId() {

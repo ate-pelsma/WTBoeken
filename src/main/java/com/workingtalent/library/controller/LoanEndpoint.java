@@ -1,5 +1,7 @@
 package com.workingtalent.library.controller;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +17,11 @@ public class LoanEndpoint {
 	@Autowired
 	private LoanService loanService;
 	
-	@GetMapping("/loan/save/{loan}")
-	public void saveLoan(@RequestBody Loan loan) 
+	@GetMapping("/loan/save/{userid}/{copyid}")
+	public void saveLoan(@PathVariable long userid, @PathVariable long copyid) 
 	{
-		loanService.saveLoan(loan);
+		Loan loan = new Loan();
+		loan.setStartDate(LocalDateTime.now());
+		loanService.saveLoan(loan, userid, copyid);
 	}
 }

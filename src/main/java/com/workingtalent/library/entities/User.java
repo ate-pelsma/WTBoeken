@@ -27,6 +27,15 @@ public class User {
 	@OneToMany
 	private List<Reservation> reservations;
 	
+	@OneToMany
+	private List<Loan> loans;
+	
+	public List<Loan> getLoans() {
+		return loans;
+	}
+	public void setLoans(List<Loan> loans) {
+		this.loans = loans;
+	}
 	public long getId() {
 		return id;
 	}
