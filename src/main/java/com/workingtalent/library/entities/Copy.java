@@ -17,6 +17,9 @@ public class Copy {
 
     @OneToMany
     private List<Loan> loans;
+    
+    private boolean loaned;
+    private boolean inactive;
 
     public List<Loan> getLoans() {
 		return loans;
@@ -25,9 +28,6 @@ public class Copy {
 	public void setLoans(List<Loan> loans) {
 		this.loans = loans;
 	}
-    
-    private boolean loaned;
-    private boolean inactive;
 
     public long getId() {
         return id;
