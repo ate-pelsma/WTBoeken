@@ -12,6 +12,8 @@ public class Loan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
 	
 	public long getId() {
 		return id;
@@ -36,8 +38,4 @@ public class Loan {
 	public void setEndDate(LocalDateTime endDate) {
 		this.endDate = endDate;
 	}
-
-	private LocalDateTime startDate;
-	
-	private LocalDateTime endDate;
 }
