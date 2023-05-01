@@ -50,4 +50,8 @@ public class BookService {
         Book book = bookRepo.findById(id).get();
         return copyRepository.bookCopyCount(book);
     }
+
+    public void deleteBook(long id) {
+        bookRepo.deleteById(id);
+    }
 }

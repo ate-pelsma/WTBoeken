@@ -16,12 +16,17 @@ public class CopyEndpoint {
 
     @PostMapping("/save/{bookId}")
     public ResponseEntity<Copy> saveCopy(@RequestBody Copy copy, @PathVariable long bookId) {
-        return new ResponseEntity<Copy>(copyService.saveCopy(copy, bookId), HttpStatus.CREATED);
+        return new ResponseEntity<>(copyService.saveCopy(copy, bookId), HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Copy> updateCopy(@RequestBody Copy copy, @PathVariable long id){
-        return new ResponseEntity<Copy>(copyService.updateCopy(copy, id), HttpStatus.OK);
+        return new ResponseEntity<>(copyService.updateCopy(copy, id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteCopy(@PathVariable long id){
+        copyService.deleteCopy(id);
     }
 
     @GetMapping("/all")

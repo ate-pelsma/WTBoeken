@@ -45,4 +45,8 @@ public class CopyService {
         copyRepository.save(existingCopy);
         return existingCopy;
     }
+
+    public void deleteCopy(long id) {
+        copyRepository.deleteById(id);
+    }
 }

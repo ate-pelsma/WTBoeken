@@ -28,6 +28,11 @@ public class BookEndpoint {
         return new ResponseEntity<Book>(bookService.updateBook(savedBook, book), HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public void deleteBook(@PathVariable long id){
+        bookService.deleteBook(id);
+    }
+
     @GetMapping("/{id}")
     public Optional<Book> findBook(@PathVariable long id){
         return bookService.findById(id);
