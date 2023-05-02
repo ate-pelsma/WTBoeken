@@ -20,8 +20,6 @@ public class User {
 	private String name;
 	private String password;
 	private String email;
-	// private List<Reservation> = new ArrayList();
-	// private List<Book> = new ArrayList();
 	private int permissions;
 	
 	@OneToMany
