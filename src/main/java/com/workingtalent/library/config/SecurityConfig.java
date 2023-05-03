@@ -42,15 +42,20 @@ public class SecurityConfig{
 		return http
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests( auth -> auth
-						.requestMatchers("/user/all").permitAll()
+						//Everyone can visit the start page ("/"), all other pages require a log in.
+						.requestMatchers("/").permitAll()
 						.anyRequest().authenticated())
+				//Load login request
 				.userDetailsService(jpaUserDetailsService)
 				.headers(headers -> headers.frameOptions())
+				//Removes HTTP sessions
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				//Login functionality
 				.httpBasic(Customizer.withDefaults())
 				.build();
 	}
 	
+	//Encode password (hardcoded right now, need to change!)
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return NoOpPasswordEncoder.getInstance(); //Big no-no in live!!
