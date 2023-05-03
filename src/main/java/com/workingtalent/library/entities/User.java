@@ -2,6 +2,8 @@ package com.workingtalent.library.entities;
 
 import java.util.List;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 // import java.util.ArrayList;
 
 import jakarta.persistence.Entity;
@@ -20,7 +22,7 @@ public class User {
 	private String name;
 	private String password;
 	private String email;
-	private int permissions;
+	private String permissions;
 	
 	@OneToMany
 	private List<Reservation> reservations;
@@ -58,10 +60,11 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getPermissions() {
+	public String getPermissions() {
 		return permissions;
+		
 	}
-	public void setPermissions(int permissions) {
+	public void setPermissions(String permissions) {
 		this.permissions = permissions;
 	}
 	public List<Reservation> getReservations() {
@@ -70,7 +73,4 @@ public class User {
 	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
 	}
-	
-	
-
 }

@@ -2,7 +2,6 @@ package com.workingtalent.library.entities;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,6 +14,7 @@ public class Book {
     private String title;
     private String ISBN;
     private String image;
+    private String author;
     // List<Tag> tag = new ArrayList();
 
     @OneToMany
@@ -45,6 +45,14 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getISBN() {
