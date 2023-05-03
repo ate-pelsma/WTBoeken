@@ -41,9 +41,9 @@ public class SecurityConfig{
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		return http
 				.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests( auth -> auth
-						.requestMatchers("/user/all").permitAll()
-						.anyRequest().authenticated())
+//				.authorizeHttpRequests( auth -> auth
+//						.requestMatchers("/user/all").permitAll()
+//						.anyRequest().authenticated())
 				.userDetailsService(jpaUserDetailsService)
 				.headers(headers -> headers.frameOptions())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
