@@ -1,10 +1,8 @@
 package com.workingtalent.library.service;
 
-import java.util.Collections;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +14,9 @@ public class UserService {
 	
 	@Autowired
 	private IUserRepository userRepo;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 
 	public Iterable<User> findAll() {
 		return userRepo.findAll();
@@ -26,28 +27,38 @@ public class UserService {
 	}
 
 	public void saveUser(User user) {
+		user.setPassword(encoder.encode(user.getPassword()));
 		userRepo.save(user);
 	}
 	
 	public void updateUser(User user, User oldUser) {
 		oldUser.setName((user.getName()==null) ? oldUser.getName():user.getName());
-		oldUser.setPassword((user.getPassword()==null) ? oldUser.getPassword():user.getPassword());
+		
+		if (!user.getPassword().equals("")) {
+			oldUser.setPassword(encoder.encode(user.getPassword()));
+		}
+		//oldUser.setPassword((user.getPassword()==null) ? oldUser.getPassword():user.getPassword());
 		oldUser.setEmail((user.getEmail()==null) ? oldUser.getEmail():user.getEmail());
 		userRepo.save(oldUser);
 	}
 	
 	public void updateUserAdmin(User user, User oldUser) {
 		oldUser.setName((user.getName()==null) ? oldUser.getName():user.getName());
-		oldUser.setPassword((user.getPassword()==null) ? oldUser.getPassword():user.getPassword());
+		
+		if (!user.getPassword().equals("")) {
+			oldUser.setPassword(encoder.encode(user.getPassword()));
+		}
+		
+		//oldUser.setPassword((user.getPassword()==null) ? oldUser.getPassword():user.getPassword());
 		oldUser.setEmail((user.getEmail()==null) ? oldUser.getEmail():user.getEmail());
 		oldUser.setPermissions((user.getPermissions()==null) ? oldUser.getPermissions():user.getPermissions());
 		userRepo.save(oldUser);
 	}
 
 	public void inactiveUser(User user) {
-		user.setName(" ");
-		user.setEmail(" ");
-		user.setPassword("inactaccpassword729");
+		user.setName("");
+		user.setEmail("");
+		user.setPassword("");
 		user.setPermissions("0");
 		userRepo.save(user);
 	}

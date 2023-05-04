@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import jakarta.persistence.Column;
 
 // import java.util.ArrayList;
 
@@ -20,18 +21,25 @@ import jakarta.persistence.OneToMany;
 public class User implements UserDetails{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Column(length = 100, nullable = false)
 	private String name;
-	private String password;
-	private String email;
-	private String permissions;
 	
-	@OneToMany
+	@Column(length = 50, nullable = false)
+	private String password;
+	
+	@Column(length = 100, nullable = false, unique = true)
+	private String email;
+	
+	@Column(length = 25, nullable = false)
+	private String permissions;
+
+	@OneToMany(mappedBy = "user")
 	private List<Reservation> reservations;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "user")
 	private List<Loan> loans;
 	
 	public List<Loan> getLoans() {

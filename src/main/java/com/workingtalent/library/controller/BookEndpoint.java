@@ -1,6 +1,7 @@
 package com.workingtalent.library.controller;
 
 import com.workingtalent.library.entities.Book;
+import com.workingtalent.library.entities.Copy;
 import com.workingtalent.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,11 @@ public class BookEndpoint {
     @GetMapping("/all")
     public Iterable<Book> findAll(){
         return bookService.findAll();
+    }
+
+    @GetMapping("/{id}/copy/all")
+    public Iterable<Copy> findAllCopies(@PathVariable long id){
+        return bookService.findAllCopies(id);
     }
 
     @GetMapping("/count/{id}")

@@ -2,6 +2,8 @@ package com.workingtalent.library.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,15 +14,14 @@ import jakarta.persistence.ManyToMany;
 public class Tag {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	private String name;
 	
-	@ManyToMany
+    @JsonIgnore
+    @ManyToMany
 	private List<Book> books;
-	
-	
 	
 	public long getId() {
 		return id;

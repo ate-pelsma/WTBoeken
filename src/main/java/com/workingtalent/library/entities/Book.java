@@ -1,24 +1,45 @@
 package com.workingtalent.library.entities;
 
-import jakarta.persistence.*;
-
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(length = 100, nullable = false)
     private String title;
-    private String ISBN;
-    private String image;
-    private String author;
-    // List<Tag> tag = new ArrayList();
 
-    @OneToMany
+    @Column(length = 20, nullable = false)
+    private String isbn;
+
+    private String image;
+
+    @Column(length = 100, nullable = false)
+    private String author;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "book")
     private List<Reservation> reservations;
+    
+    @ManyToMany(mappedBy = "books")
+    private List<Tag> tags;
+    
+    @OneToMany(mappedBy = "book")
+    private List<Copy> copies;
 
 	private boolean archived;
     private int stock;
@@ -55,12 +76,12 @@ public class Book {
         this.author = author;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getImage() {
@@ -86,4 +107,13 @@ public class Book {
     public void setStock(int stock) {
         this.stock = stock;
     }
+    
+    public List<Tag> getTags() {
+		return tags;
+	}
+    
+    public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+
 }

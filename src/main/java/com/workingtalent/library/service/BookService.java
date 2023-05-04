@@ -1,6 +1,7 @@
 package com.workingtalent.library.service;
 
 import com.workingtalent.library.entities.Book;
+import com.workingtalent.library.entities.Copy;
 import com.workingtalent.library.repository.IBookRepository;
 import com.workingtalent.library.repository.ICopyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,11 @@ public class BookService {
         if(book.getImage() != null){
             savedBook.setImage(book.getImage());
         }
-        if(book.getISBN() != null){
-            savedBook.setISBN(book.getISBN());
+        if(book.getIsbn() != null){
+            savedBook.setIsbn(book.getIsbn());
         }
         if(book.getAuthor() != null){
-            savedBook.setISBN(book.getAuthor());
+            savedBook.setIsbn(book.getAuthor());
         }
 
         bookRepo.save(savedBook);
@@ -56,5 +57,10 @@ public class BookService {
 
     public void deleteBook(long id) {
         bookRepo.deleteById(id);
+    }
+
+    public Iterable<Copy> findAllCopies(long id) {
+        Book book = bookRepo.findById(id).get();
+        return copyRepository.findCopyByBook(book);
     }
 }
