@@ -13,7 +13,7 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class Copy {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private int copyNumber;
