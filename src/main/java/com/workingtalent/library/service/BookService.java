@@ -30,11 +30,11 @@ public class BookService {
         if(book.getImage() != null){
             savedBook.setImage(book.getImage());
         }
-        if(book.getISBN() != null){
-            savedBook.setISBN(book.getISBN());
+        if(book.getIsbn() != null){
+            savedBook.setIsbn(book.getIsbn());
         }
         if(book.getAuthor() != null){
-            savedBook.setISBN(book.getAuthor());
+            savedBook.setIsbn(book.getAuthor());
         }
 
         bookRepo.save(savedBook);
