@@ -37,6 +37,9 @@ public class Book {
     
     @ManyToMany(mappedBy = "books")
     private List<Tag> tags;
+    
+    @OneToMany(mappedBy = "book")
+    private List<Copy> copies;
 
 	private boolean archived;
     private int stock;

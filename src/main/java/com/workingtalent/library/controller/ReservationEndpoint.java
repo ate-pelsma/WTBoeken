@@ -1,6 +1,6 @@
 package com.workingtalent.library.controller;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class ReservationEndpoint {
 	public void saveReservation(@PathVariable long userid, @PathVariable long bookid)
 	{
 		Reservation reservation = new Reservation();
-		reservation.setReqDate(LocalDateTime.now());
+		reservation.setReqDate(LocalDate.now());
 		reservationService.saveReservation(reservation, userid, bookid);
 	}
 	

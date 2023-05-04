@@ -2,6 +2,8 @@ package com.workingtalent.library.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,11 +20,11 @@ public class Copy {
 
     private int copyNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id")
+    @JsonIgnore
+    @ManyToOne(optional = false)
     private Book book;
 
-    @OneToMany
+    @OneToMany(mappedBy = "copy")
     private List<Loan> loans;
     
     private boolean loaned;

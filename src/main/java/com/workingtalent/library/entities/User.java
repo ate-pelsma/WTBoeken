@@ -2,6 +2,8 @@ package com.workingtalent.library.entities;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
+
 // import java.util.ArrayList;
 
 import jakarta.persistence.Entity;
@@ -9,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
 @Entity
 public class User {
@@ -18,15 +19,22 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Column(length = 100, nullable = false)
 	private String name;
+	
+	@Column(length = 50, nullable = false)
 	private String password;
+	
+	@Column(length = 100, nullable = false, unique = true)
 	private String email;
+	
+	@Column(length = 25, nullable = false)
 	private String permissions;
 
-	@OneToMany
+	@OneToMany(mappedBy = "user")
 	private List<Reservation> reservations;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "user")
 	private List<Loan> loans;
 	
 	public List<Loan> getLoans() {

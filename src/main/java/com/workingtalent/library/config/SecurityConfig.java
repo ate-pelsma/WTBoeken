@@ -44,7 +44,7 @@ public class SecurityConfig{
 				.authorizeHttpRequests( auth -> auth
 						//Everyone can visit the start page ("/"), all other pages require a log in.
 						.requestMatchers("/login").permitAll()
-						.anyRequest().authenticated())
+						.anyRequest().permitAll()) // TODO moet naar authenticated
 				//Load login request
 				.userDetailsService(jpaUserDetailsService)
 				.headers(headers -> headers.frameOptions());
