@@ -12,4 +12,5 @@ public interface ICopyRepository extends CrudRepository<Copy, Long> {
 
     @Query("select count(c) from Copy c where c.book = ?1 and c.inactive != true")
     long bookCopyCount(Book book);
+    Iterable<Copy> findCopyByBook(Book book);
 }

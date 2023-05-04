@@ -1,22 +1,14 @@
 package com.workingtalent.library.controller;
 
-import java.util.Optional;
-
+import com.workingtalent.library.entities.Book;
+import com.workingtalent.library.entities.Copy;
+import com.workingtalent.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.workingtalent.library.entities.Book;
-import com.workingtalent.library.service.BookService;
+import java.util.Optional;
 
 @CrossOrigin(maxAge = 3600)
 @RestController
@@ -50,6 +42,11 @@ public class BookEndpoint {
     @GetMapping("/all")
     public Iterable<Book> findAll(){
         return bookService.findAll();
+    }
+
+    @GetMapping("/{id}/copy/all")
+    public Iterable<Copy> findAllCopies(@PathVariable long id){
+        return bookService.findAllCopies(id);
     }
 
     @GetMapping("/count/{id}")

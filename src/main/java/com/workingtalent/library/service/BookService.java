@@ -1,13 +1,13 @@
 package com.workingtalent.library.service;
 
-import java.util.Optional;
-
+import com.workingtalent.library.entities.Book;
+import com.workingtalent.library.entities.Copy;
+import com.workingtalent.library.repository.IBookRepository;
+import com.workingtalent.library.repository.ICopyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.workingtalent.library.entities.Book;
-import com.workingtalent.library.repository.IBookRepository;
-import com.workingtalent.library.repository.ICopyRepository;
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -57,5 +57,10 @@ public class BookService {
 
     public void deleteBook(long id) {
         bookRepo.deleteById(id);
+    }
+
+    public Iterable<Copy> findAllCopies(long id) {
+        Book book = bookRepo.findById(id).get();
+        return copyRepository.findCopyByBook(book);
     }
 }
