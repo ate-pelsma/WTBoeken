@@ -25,6 +25,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -33,11 +34,15 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.workingtalent.library.service.JpaUserDetailsService;
+import com.workingtalent.library.utils.JwtFilter;
 
 @EnableWebSecurity
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig{
+	
+	@Autowired
+	private JwtFilter jwtFilter;
 	
 	private final JpaUserDetailsService jpaUserDetailsService;
 	
@@ -48,7 +53,6 @@ public class SecurityConfig{
 	@Bean
 	public AuthenticationManager authManager(JpaUserDetailsService jpaUserDetailsService) 
 	{
-		System.out.println("Ik begin met autoriseren");
 		var authProvider = new DaoAuthenticationProvider();
 		authProvider.setUserDetailsService(jpaUserDetailsService);
 		authProvider.setPasswordEncoder(passwordEncoder());
@@ -65,18 +69,10 @@ public class SecurityConfig{
 						//Everyone can visit the start page ("/"), all other pages require a log in.
 						.requestMatchers("/login").permitAll()
 						.anyRequest().authenticated())
+				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 				//Load login request
 				.userDetailsService(jpaUserDetailsService)
 				.headers(headers -> headers.frameOptions());
-				//Removes HTTP sessions
-//				.formLogin()
-////					.loginPage("/login")
-//					.defaultSuccessUrl("/")
-//					.permitAll()
-//					.and()
-//				.logout()
-//					.logoutUrl("/logout")
-//					.permitAll();
 			
 			return http.build();
 	}

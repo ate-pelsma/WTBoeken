@@ -1,11 +1,13 @@
 package com.workingtalent.library.service;
 
+import java.util.Optional;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.workingtalent.library.entities.SecurityUser;
+import com.workingtalent.library.entities.User;
 import com.workingtalent.library.repository.IUserRepository;
 
 @Service
@@ -21,10 +23,10 @@ public class JpaUserDetailsService implements UserDetailsService{
 	//Look for the 'Optional' user (given there is one) by their email (username) in the database. If there is no user with that email, throw UsernameNotFoundException. 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		System.out.println(email);
-		return userRepository.findByEmail(email)
-				.map(SecurityUser::new)
-				.orElseThrow(() -> new UsernameNotFoundException("Invalid credentials"));
+		Optional<User> userOpt = userRepository.findByEmail(email);
+		
+		return userOpt.orElseThrow(() -> new UsernameNotFoundException("Bad credentials"));
+				
 	}
 	
 }
