@@ -11,13 +11,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.workingtalent.library.service.JpaUserDetailsService;
+import com.workingtalent.library.utils.JwtFilter;
 
 @EnableWebSecurity
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig{
+	
+	@Autowired
+	private JwtFilter jwtFilter;
 	
 	private final JpaUserDetailsService jpaUserDetailsService;
 	
@@ -28,7 +33,6 @@ public class SecurityConfig{
 	@Bean
 	public AuthenticationManager authManager(JpaUserDetailsService jpaUserDetailsService) 
 	{
-		System.out.println("Ik begin met autoriseren");
 		var authProvider = new DaoAuthenticationProvider();
 		authProvider.setUserDetailsService(jpaUserDetailsService);
 		authProvider.setPasswordEncoder(passwordEncoder());
@@ -44,19 +48,11 @@ public class SecurityConfig{
 				.authorizeHttpRequests( auth -> auth
 						//Everyone can visit the start page ("/"), all other pages require a log in.
 						.requestMatchers("/login").permitAll()
+				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 						.anyRequest().permitAll()) // TODO moet naar authenticated
 				//Load login request
 				.userDetailsService(jpaUserDetailsService)
 				.headers(headers -> headers.frameOptions());
-				//Removes HTTP sessions
-//				.formLogin()
-////					.loginPage("/login")
-//					.defaultSuccessUrl("/")
-//					.permitAll()
-//					.and()
-//				.logout()
-//					.logoutUrl("/logout")
-//					.permitAll();
 			
 			return http.build();
 	}
