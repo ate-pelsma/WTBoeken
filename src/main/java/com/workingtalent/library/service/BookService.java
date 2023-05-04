@@ -33,6 +33,9 @@ public class BookService {
         if(book.getISBN() != null){
             savedBook.setISBN(book.getISBN());
         }
+        if(book.getAuthor() != null){
+            savedBook.setISBN(book.getAuthor());
+        }
 
         bookRepo.save(savedBook);
         return savedBook;
