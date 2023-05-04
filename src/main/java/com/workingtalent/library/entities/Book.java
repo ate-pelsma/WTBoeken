@@ -16,7 +16,7 @@ public class Book {
     private long id;
 
     private String title;
-    private String ISBN;
+    private String isbn;
     private String image;
     private String author;
     // List<Tag> tag = new ArrayList();
@@ -59,12 +59,12 @@ public class Book {
         this.author = author;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getImage() {
