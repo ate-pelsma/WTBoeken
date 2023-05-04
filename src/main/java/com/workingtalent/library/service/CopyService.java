@@ -1,11 +1,12 @@
 package com.workingtalent.library.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.workingtalent.library.entities.Book;
 import com.workingtalent.library.entities.Copy;
 import com.workingtalent.library.repository.IBookRepository;
 import com.workingtalent.library.repository.ICopyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class CopyService {

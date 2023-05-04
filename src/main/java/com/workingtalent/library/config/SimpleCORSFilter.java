@@ -2,7 +2,6 @@ package com.workingtalent.library.config;
 
 import java.io.IOException;
 
-import org.springframework.boot.autoconfigure.web.WebProperties.Resources.Chain;
 import org.springframework.stereotype.Component;
 
 import jakarta.servlet.Filter;

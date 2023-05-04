@@ -1,12 +1,13 @@
 package com.workingtalent.library.service;
 
-import com.workingtalent.library.entities.Book;
-import com.workingtalent.library.repository.IBookRepository;
-import com.workingtalent.library.repository.ICopyRepository;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.workingtalent.library.entities.Book;
+import com.workingtalent.library.repository.IBookRepository;
+import com.workingtalent.library.repository.ICopyRepository;
 
 @Service
 public class BookService {

@@ -2,8 +2,6 @@ package com.workingtalent.library.entities;
 
 import java.util.List;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 // import java.util.ArrayList;
 
 import jakarta.persistence.Entity;
