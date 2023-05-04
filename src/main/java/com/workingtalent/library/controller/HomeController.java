@@ -7,20 +7,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 
+	//Test class to check Role functionality.
 	@GetMapping("/")
 	public String home() 
 	{
 		return "Hello anybody!";
 	}
-	
-	@PreAuthorize("hasRole('ROLE_USER')")
+
+	@PreAuthorize("hasAuthority('ROLE_USER')")
 	@GetMapping("/user")
 	public String user() 
 	{
 		return "Hello, user!";
 	}
-	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@GetMapping("/admin")
 	public String admin()
 	{
