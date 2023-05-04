@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.workingtalent.library.entities.User;
 

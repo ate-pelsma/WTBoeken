@@ -1,14 +1,22 @@
 package com.workingtalent.library.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -30,7 +38,7 @@ import com.workingtalent.library.service.JpaUserDetailsService;
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig{
-
+	
 	private final JpaUserDetailsService jpaUserDetailsService;
 	
 	public SecurityConfig(JpaUserDetailsService jpaUserDetailsService) {
@@ -38,28 +46,43 @@ public class SecurityConfig{
 	}
 	
 	@Bean
+	public AuthenticationManager authManager(JpaUserDetailsService jpaUserDetailsService) 
+	{
+		System.out.println("Ik begin met autoriseren");
+		var authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(jpaUserDetailsService);
+		authProvider.setPasswordEncoder(passwordEncoder());
+		
+		return new ProviderManager(authProvider);
+
+	}
+	
+	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-		return http
+			http
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests( auth -> auth
 						//Everyone can visit the start page ("/"), all other pages require a log in.
-						.requestMatchers("/").permitAll()
+						.requestMatchers("/login").permitAll()
 						.anyRequest().authenticated())
 				//Load login request
 				.userDetailsService(jpaUserDetailsService)
-				.headers(headers -> headers.frameOptions())
+				.headers(headers -> headers.frameOptions());
 				//Removes HTTP sessions
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				//Login functionality
-				.httpBasic(Customizer.withDefaults())
-				.build();
+//				.formLogin()
+////					.loginPage("/login")
+//					.defaultSuccessUrl("/")
+//					.permitAll()
+//					.and()
+//				.logout()
+//					.logoutUrl("/logout")
+//					.permitAll();
+			
+			return http.build();
 	}
 	
-	//Encode password (hardcoded right now, need to change!)
 	@Bean
 	PasswordEncoder passwordEncoder() {
-		return NoOpPasswordEncoder.getInstance(); //Big no-no in live!!
+		return new BCryptPasswordEncoder();
 	}
-
-	
 }

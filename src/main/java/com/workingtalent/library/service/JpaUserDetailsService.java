@@ -21,10 +21,10 @@ public class JpaUserDetailsService implements UserDetailsService{
 	//Look for the 'Optional' user (given there is one) by their email (username) in the database. If there is no user with that email, throw UsernameNotFoundException. 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		
+		System.out.println(email);
 		return userRepository.findByEmail(email)
 				.map(SecurityUser::new)
-				.orElseThrow(() -> new UsernameNotFoundException("Username not found: " + email));
+				.orElseThrow(() -> new UsernameNotFoundException("Invalid credentials"));
 	}
 	
 }

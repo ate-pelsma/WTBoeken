@@ -13,15 +13,15 @@ public class HomeController {
 	{
 		return "Hello anybody!";
 	}
-	
-	@PreAuthorize("hasRole('ROLE_USER')")
+
+	@PreAuthorize("hasAuthority('ROLE_USER')")
 	@GetMapping("/user")
 	public String user() 
 	{
 		return "Hello, user!";
 	}
-	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@GetMapping("/admin")
 	public String admin()
 	{
