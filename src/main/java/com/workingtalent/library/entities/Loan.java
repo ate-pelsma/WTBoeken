@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 @Entity
 public class Loan {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
