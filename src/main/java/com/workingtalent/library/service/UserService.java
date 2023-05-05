@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.workingtalent.library.controller.AuthenticationEndPoint;
 import com.workingtalent.library.entities.User;
 import com.workingtalent.library.repository.IUserRepository;
 
@@ -16,7 +17,7 @@ public class UserService {
 	private IUserRepository userRepo;
 	
 	@Autowired
-	private PasswordEncoder encoder;
+	public AuthenticationEndPoint autenticationEndPoint;
 
 	public Iterable<User> findAll() {
 		return userRepo.findAll();
@@ -27,7 +28,7 @@ public class UserService {
 	}
 
 	public void saveUser(User user) {
-		user.setPassword(encoder.encode(user.getPassword()));
+		user.setPassword(autenticationEndPoint.passwordEncoder.encode(user.getPassword()));
 		userRepo.save(user);
 	}
 	
@@ -35,7 +36,7 @@ public class UserService {
 		oldUser.setName((user.getName()==null) ? oldUser.getName():user.getName());
 		
 		if (!user.getPassword().equals("")) {
-			oldUser.setPassword(encoder.encode(user.getPassword()));
+			user.setPassword(autenticationEndPoint.passwordEncoder.encode(user.getPassword()));
 		}
 		//oldUser.setPassword((user.getPassword()==null) ? oldUser.getPassword():user.getPassword());
 		oldUser.setEmail((user.getEmail()==null) ? oldUser.getEmail():user.getEmail());
@@ -46,7 +47,7 @@ public class UserService {
 		oldUser.setName((user.getName()==null) ? oldUser.getName():user.getName());
 		
 		if (!user.getPassword().equals("")) {
-			oldUser.setPassword(encoder.encode(user.getPassword()));
+			user.setPassword(autenticationEndPoint.passwordEncoder.encode(user.getPassword()));
 		}
 		
 		//oldUser.setPassword((user.getPassword()==null) ? oldUser.getPassword():user.getPassword());
