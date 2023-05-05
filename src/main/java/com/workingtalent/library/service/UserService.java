@@ -32,26 +32,17 @@ public class UserService {
 	}
 	
 	public void updateUser(User user, User oldUser) {
-		oldUser.setName((user.getName()==null) ? oldUser.getName():user.getName());
-		
-		if (!user.getPassword().equals("")) {
-			oldUser.setPassword(encoder.encode(user.getPassword()));
-		}
-		//oldUser.setPassword((user.getPassword()==null) ? oldUser.getPassword():user.getPassword());
-		oldUser.setEmail((user.getEmail()==null) ? oldUser.getEmail():user.getEmail());
+		if (!user.getName().equals("")) oldUser.setName(encoder.encode(user.getName()));
+		if (!user.getPassword().equals("")) oldUser.setPassword(encoder.encode(user.getPassword()));
+		if (!user.getEmail().equals("")) oldUser.setEmail(encoder.encode(user.getEmail()));
 		userRepo.save(oldUser);
 	}
 	
 	public void updateUserAdmin(User user, User oldUser) {
-		oldUser.setName((user.getName()==null) ? oldUser.getName():user.getName());
-		
-		if (!user.getPassword().equals("")) {
-			oldUser.setPassword(encoder.encode(user.getPassword()));
-		}
-		
-		//oldUser.setPassword((user.getPassword()==null) ? oldUser.getPassword():user.getPassword());
-		oldUser.setEmail((user.getEmail()==null) ? oldUser.getEmail():user.getEmail());
-		oldUser.setPermissions((user.getPermissions()==null) ? oldUser.getPermissions():user.getPermissions());
+		if (!user.getName().equals("")) oldUser.setName(encoder.encode(user.getName()));
+		if (!user.getPassword().equals("")) oldUser.setPassword(encoder.encode(user.getPassword()));
+		if (!user.getEmail().equals("")) oldUser.setEmail(encoder.encode(user.getEmail()));
+		if (!user.getPermissions().equals("")) oldUser.setPermissions(encoder.encode(user.getPermissions()));
 		userRepo.save(oldUser);
 	}
 
