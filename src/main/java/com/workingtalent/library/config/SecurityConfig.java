@@ -1,5 +1,6 @@
 package com.workingtalent.library.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,8 +49,8 @@ public class SecurityConfig{
 				.authorizeHttpRequests( auth -> auth
 						//Everyone can visit the start page ("/"), all other pages require a log in.
 						.requestMatchers("/login").permitAll()
-				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-						.anyRequest().permitAll()) // TODO moet naar authenticated
+						.anyRequest().permitAll())
+						.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)// TODO moet naar authenticated
 				//Load login request
 				.userDetailsService(jpaUserDetailsService)
 				.headers(headers -> headers.frameOptions());
