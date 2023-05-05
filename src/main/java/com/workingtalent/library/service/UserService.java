@@ -3,7 +3,6 @@ package com.workingtalent.library.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.workingtalent.library.controller.AuthenticationEndPoint;
@@ -33,26 +32,17 @@ public class UserService {
 	}
 	
 	public void updateUser(User user, User oldUser) {
-		oldUser.setName((user.getName()==null) ? oldUser.getName():user.getName());
-		
-		if (!user.getPassword().equals("")) {
-			user.setPassword(autenticationEndPoint.passwordEncoder.encode(user.getPassword()));
-		}
-		//oldUser.setPassword((user.getPassword()==null) ? oldUser.getPassword():user.getPassword());
-		oldUser.setEmail((user.getEmail()==null) ? oldUser.getEmail():user.getEmail());
+		if (!user.getName().equals("")) oldUser.setName((user.getName()));
+		if (!user.getPassword().equals("")) oldUser.setPassword(autenticationEndPoint.passwordEncoder.encode(user.getPassword()));
+		if (!user.getEmail().equals("")) oldUser.setEmail((user.getEmail()));
 		userRepo.save(oldUser);
 	}
 	
 	public void updateUserAdmin(User user, User oldUser) {
-		oldUser.setName((user.getName()==null) ? oldUser.getName():user.getName());
-		
-		if (!user.getPassword().equals("")) {
-			user.setPassword(autenticationEndPoint.passwordEncoder.encode(user.getPassword()));
-		}
-		
-		//oldUser.setPassword((user.getPassword()==null) ? oldUser.getPassword():user.getPassword());
-		oldUser.setEmail((user.getEmail()==null) ? oldUser.getEmail():user.getEmail());
-		oldUser.setPermissions((user.getPermissions()==null) ? oldUser.getPermissions():user.getPermissions());
+		if (!user.getName().equals("")) oldUser.setName(user.getName());
+		if (!user.getPassword().equals("")) oldUser.setPassword(autenticationEndPoint.passwordEncoder.encode(user.getPassword()));
+		if (!user.getEmail().equals("")) oldUser.setEmail(user.getEmail());
+		if (!user.getPermissions().equals("")) oldUser.setPermissions(user.getPermissions());
 		userRepo.save(oldUser);
 	}
 
