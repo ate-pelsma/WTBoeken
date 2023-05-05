@@ -3,6 +3,7 @@ package com.workingtalent.library.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.workingtalent.library.config.SecurityConfig;
 import com.workingtalent.library.entities.User;
 import com.workingtalent.library.repository.IUserRepository;
 import com.workingtalent.library.service.UserService;
@@ -25,9 +27,6 @@ public class UserEndpoint {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private PasswordEncoder encoder;
 	
 	@GetMapping("/all")
 	public Iterable<User> findAll() {
@@ -41,7 +40,6 @@ public class UserEndpoint {
 	
 	@PostMapping("/save")
 	public ResponseEntity<Object> saveUser(@RequestBody User user) {
-		user.setPassword(encoder.encode(user.getPassword()));
 		userService.saveUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
 	}

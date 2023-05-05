@@ -2,6 +2,7 @@ package com.workingtalent.library.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +15,7 @@ import com.workingtalent.library.repository.IUserRepository;
 public class JpaUserDetailsService implements UserDetailsService{
 
 	//Provide access to user data
+	@Autowired
 	private final IUserRepository userRepository;
 	
 	public JpaUserDetailsService(IUserRepository userRepository) {
@@ -24,7 +26,6 @@ public class JpaUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		Optional<User> userOpt = userRepository.findByEmail(email);
-		
 		return userOpt.orElseThrow(() -> new UsernameNotFoundException("Bad credentials"));
 				
 	}
