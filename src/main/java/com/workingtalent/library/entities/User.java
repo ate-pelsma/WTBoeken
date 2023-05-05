@@ -75,6 +75,10 @@ public class User implements UserDetails{
 		this.permissions = permissions;
 	}
 	
+	public String getPermissions() {
+		return permissions;
+	}
+	
 	public List<Reservation> getReservations() {
 		return reservations;
 	}
