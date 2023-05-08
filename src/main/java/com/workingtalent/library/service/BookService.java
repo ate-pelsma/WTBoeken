@@ -7,6 +7,8 @@ import com.workingtalent.library.repository.ICopyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,7 +22,27 @@ public class BookService {
 
     public Book saveBook(Book book){
         bookRepo.save(book);
+        createCopiesForNewBook(book);
         return book;
+    }
+
+    public void createCopiesForNewBook(Book book){
+        for(int i = 1; i <= book.getStock(); i++) {
+            Copy copy = new Copy(i, book);
+            copyRepository.save(copy);
+            addCopyToBookList(copy, book);
+        }
+    }
+
+    private void addCopyToBookList(Copy copy, Book book) {
+        try{
+            List<Copy> currentList = book.getCopies();
+            currentList.add(copy);
+            book.setCopies(currentList);
+        } catch (NullPointerException e) {
+            List<Copy> newList = new ArrayList<>();
+            newList.add(copy);
+        }
     }
 
     public Book updateBook(Book savedBook, Book book){

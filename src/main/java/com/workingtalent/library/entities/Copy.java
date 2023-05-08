@@ -1,8 +1,7 @@
 package com.workingtalent.library.entities;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Copy {
@@ -28,6 +28,15 @@ public class Copy {
     
     private boolean loaned;
     private boolean inactive;
+
+    public Copy(){
+
+    }
+
+    public Copy(int copyNumber, Book book){
+        this.copyNumber = copyNumber;
+        this.book = book;
+    }
 
     public List<Loan> getLoans() {
 		return loans;
