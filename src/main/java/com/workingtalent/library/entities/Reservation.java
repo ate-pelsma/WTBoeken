@@ -24,7 +24,7 @@ public class Reservation {
 	@Enumerated(EnumType.STRING)
 	private ReservationStatus status = ReservationStatus.PENDING;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	private Book book;
 	
 	@JsonIgnore

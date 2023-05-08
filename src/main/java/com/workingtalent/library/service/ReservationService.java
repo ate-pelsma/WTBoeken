@@ -18,27 +18,11 @@ public class ReservationService {
 	@Autowired
 	private IReservationRepository reservationRepo;
 	
-	@Autowired
-	private IBookRepository bookRepo;
-	
-	@Autowired
-	private IUserRepository userRepo;
-	
-	public void saveReservation(Reservation reservation, long userid, long bookid) 
-	{
-		reservationRepo.save(reservation);
+	public Reservation save(User user) {
+		System.out.println(user);
+		Reservation reservation = new Reservation();
+		reservation.setUser(user);
 		
-		Book book = bookRepo.findById(bookid).get();
-		List<Reservation> bookReservations = book.getReservations();
-		bookReservations.add(reservation);
-		book.setReservations(bookReservations);
-		bookRepo.save(book);
-		
-		User user = userRepo.findById(userid).get();
-		List<Reservation> userReservations = user.getReservations();
-		userReservations.add(reservation);
-		user.setReservations(userReservations);
-		userRepo.save(user);
+		return reservationRepo.save(reservation);
 	}
-	
 }
