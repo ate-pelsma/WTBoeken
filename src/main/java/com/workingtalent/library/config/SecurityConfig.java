@@ -1,5 +1,8 @@
 package com.workingtalent.library.config;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +29,11 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -61,22 +69,30 @@ public class SecurityConfig{
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 			http
-				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests( auth -> auth
-						//Everyone can visit the start page ("/"), all other pages require a log in.
-						.requestMatchers("/login").permitAll()
-						.anyRequest().permitAll())
+					//Everyone can visit the start page ("/"), all other pages require a log in.
+					.requestMatchers("/login").permitAll()
+					.anyRequest().authenticated())
+				.csrf(csrf -> csrf.disable())
 				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 				//Load login request
-				.userDetailsService(jpaUserDetailsService)
 				.headers(headers -> headers.frameOptions())
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-			
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				.cors(Customizer.withDefaults());
 			return http.build();
 	}
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Configuration
+	public class WebConfig implements WebMvcConfigurer{
+		@Override
+		public void addCorsMappings(CorsRegistry registry) {
+			registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowedMethods("*");
+		}
 	}
 }

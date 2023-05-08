@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.workingtalent.library.entities.User;
 import com.workingtalent.library.repository.IUserRepository;
 
 import jakarta.servlet.FilterChain;
@@ -37,7 +35,7 @@ public class JwtFilter extends OncePerRequestFilter{
 		
 		//Get authorization header and validate.
 		final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-		if(!StringUtils.hasText(header) || (StringUtils.hasText(header) || !header.startsWith("Bearer "))) {
+		if(!StringUtils.hasText(header) || (StringUtils.hasText(header) && !header.startsWith("Bearer "))) {
 			chain.doFilter(request, response);
 			return;
 		}
@@ -45,8 +43,8 @@ public class JwtFilter extends OncePerRequestFilter{
 		final String token = header.split(" ")[1].trim();
 		
 		//check if error
-		User userDetails = userRepo
-        		.findByEmail(jwtUtil.getUsernameFromToken(token))
+		UserDetails userDetails = userRepo
+        		.findByUsername(jwtUtil.getUsernameFromToken(token))
         		.orElse(null);
 		
 		//Get jwt token and validate

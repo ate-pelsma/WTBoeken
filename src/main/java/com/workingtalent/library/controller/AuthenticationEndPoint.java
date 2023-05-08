@@ -36,7 +36,6 @@ public class AuthenticationEndPoint {
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
 		try {
-			System.out.println(passwordEncoder.encode(loginRequest.password()));
 			Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
 			User user = (User) authentication.getPrincipal();
 	        String token = jwtUtils.generateToken(user);

@@ -18,11 +18,11 @@ public class ReservationService {
 	@Autowired
 	private IReservationRepository reservationRepo;
 	
-	public Reservation save(User user) {
-		System.out.println(user);
+	public Reservation saveReservation(User user) 
+	{
 		Reservation reservation = new Reservation();
 		reservation.setUser(user);
-		
 		return reservationRepo.save(reservation);
+		
 	}
 }
