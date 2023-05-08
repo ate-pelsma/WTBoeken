@@ -27,18 +27,7 @@ public class ReservationService {
 	public void saveReservation(Reservation reservation, long userid, long bookid) 
 	{
 		reservationRepo.save(reservation);
-		
-		Book book = bookRepo.findById(bookid).get();
-		List<Reservation> bookReservations = book.getReservations();
-		bookReservations.add(reservation);
-		book.setReservations(bookReservations);
-		bookRepo.save(book);
-		
-		User user = userRepo.findById(userid).get();
-		List<Reservation> userReservations = user.getReservations();
-		userReservations.add(reservation);
-		user.setReservations(userReservations);
-		userRepo.save(user);
+	
 	}
 	
 }
