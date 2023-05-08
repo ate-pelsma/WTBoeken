@@ -14,18 +14,13 @@ import com.workingtalent.library.repository.IUserRepository;
 @Service
 public class JpaUserDetailsService implements UserDetailsService{
 
-	//Provide access to user data
+	
 	@Autowired
-	private final IUserRepository userRepository;
-	
-	public JpaUserDetailsService(IUserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
-	
-	//Look for the 'Optional' user (given there is one) by their email (username) in the database. If there is no user with that email, throw UsernameNotFoundException. 
+	IUserRepository userRepository;
+ 
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Optional<User> userOpt = userRepository.findByEmail(email);
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Optional<User> userOpt = userRepository.findByUsername(username);
 		return userOpt.orElseThrow(() -> new UsernameNotFoundException("Bad credentials"));
 				
 	}

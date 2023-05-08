@@ -1,5 +1,6 @@
 package com.workingtalent.library.entities;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -32,10 +33,10 @@ public class User implements UserDetails{
 	private String password;
 	
 	@Column(length = 100, nullable = false, unique = true)
-	private String email;
+	private String username;
 	
 	@Column(length = 25, nullable = false)
-	private String permissions;
+	public String permissions;
 
 	@OneToMany(mappedBy = "user")
 	private List<Reservation> reservations;
@@ -65,12 +66,6 @@ public class User implements UserDetails{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
 	public void setPermissions(String permissions) {
 		this.permissions = permissions;
@@ -86,6 +81,7 @@ public class User implements UserDetails{
 	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
 	}
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
@@ -99,7 +95,7 @@ public class User implements UserDetails{
 
 	@Override
 	public String getUsername() {
-		return email;
+		return username;
 	}
 
 	@Override

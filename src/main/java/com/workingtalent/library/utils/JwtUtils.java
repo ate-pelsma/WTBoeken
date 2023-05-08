@@ -15,8 +15,10 @@ import com.workingtalent.library.entities.User;
 
 @Component
 public class JwtUtils implements Serializable{
-
-    private static final String SECRET_KEY = "5468576D5A7134743777217A25432A462D4A404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970337336763979244226452948404D";
+	
+	private static final long serialVersionUID = -5156909830069898583L;
+	
+	private static final String SECRET_KEY = "5468576D5A7134743777217A25432A462D4A404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970337336763979244226452948404D";
     private static final int EXPIRATION_TIME = 3600000; // 1 hour in milliseconds
 
     public String generateToken(UserDetails userDetails) {
@@ -27,12 +29,13 @@ public class JwtUtils implements Serializable{
     @SuppressWarnings("deprecation")
 	private String doGenerateToken(Map<String, Object> claims, String subject) {
     	return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-    			.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME * 1000))
+    			.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME * 1000000000))
     			.signWith(SignatureAlgorithm.HS512, SECRET_KEY).compact();
     }
     
     public String getUsernameFromToken(String token) 
     {
+		System.out.println(token);
     	return getClaimFromToken(token, Claims::getSubject);
     }
 
@@ -68,9 +71,9 @@ public class JwtUtils implements Serializable{
 	}
 	
 	//check if error
-	public Boolean validateToken(String token, User userDetails) {
+	public Boolean validateToken(String token, UserDetails userDetails) {
 		final String username = getUsernameFromToken(token);
-		return username.equals(userDetails.getEmail()) && !isTokenExpired(token);
+		return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
 	}
 
 }
