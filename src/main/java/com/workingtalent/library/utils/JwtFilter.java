@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.workingtalent.library.entities.SecurityUser;
 import com.workingtalent.library.entities.User;
 import com.workingtalent.library.repository.IUserRepository;
 
