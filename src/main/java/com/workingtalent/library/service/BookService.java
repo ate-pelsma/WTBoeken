@@ -60,6 +60,7 @@ public class BookService {
             savedBook.setIsbn(book.getAuthor());
         }
 
+        savedBook.setArchived(book.isArchived());
         bookRepo.save(savedBook);
         return savedBook;
     }
