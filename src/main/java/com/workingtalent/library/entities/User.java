@@ -29,12 +29,12 @@ public class User implements UserDetails{
 	@Column(length = 100, nullable = false)
 	private String name;
 	
-	@Column(length = 50, nullable = false)
+	@Column(length = 100, nullable = false)
 	private String password;
 	
 	@Column(length = 100, nullable = false, unique = true)
 	private String username;
-	
+
 	@Column(length = 25, nullable = false)
 	public String permissions;
 
@@ -96,6 +96,10 @@ public class User implements UserDetails{
 	@Override
 	public String getUsername() {
 		return username;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	@Override
