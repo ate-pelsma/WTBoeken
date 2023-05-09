@@ -34,21 +34,21 @@ public class UserService {
 	public void updateUser(User user, User oldUser) {
 		if (!user.getName().equals("")) oldUser.setName((user.getName()));
 		if (!user.getPassword().equals("")) oldUser.setPassword(autenticationEndPoint.passwordEncoder.encode(user.getPassword()));
-		if (!user.getEmail().equals("")) oldUser.setEmail((user.getEmail()));
+		if (!user.getUsername().equals("")) oldUser.setUsername((user.getUsername()));
 		userRepo.save(oldUser);
 	}
 	
 	public void updateUserAdmin(User user, User oldUser) {
 		if (!user.getName().equals("")) oldUser.setName(user.getName());
 		if (!user.getPassword().equals("")) oldUser.setPassword(autenticationEndPoint.passwordEncoder.encode(user.getPassword()));
-		if (!user.getEmail().equals("")) oldUser.setEmail(user.getEmail());
+		if (!user.getUsername().equals("")) oldUser.setUsername(user.getUsername());
 		if (!user.getPermissions().equals("")) oldUser.setPermissions(user.getPermissions());
 		userRepo.save(oldUser);
 	}
 
 	public void inactiveUser(User user) {
 		user.setName("");
-		user.setEmail("");
+		user.setUsername("");
 		user.setPassword("");
 		user.setPermissions("0");
 		userRepo.save(user);
