@@ -34,6 +34,15 @@ public class BookService {
         }
     }
 
+    public Book addCopyToBook(Book savedBook) {
+        savedBook.setStock(savedBook.getStock() + 1);
+        Copy copy = new Copy(savedBook.getStock(), savedBook);
+        copyRepository.save(copy);
+        addCopyToBookList(copy, savedBook);
+        bookRepo.save(savedBook);
+        return savedBook;
+    }
+
     private void addCopyToBookList(Copy copy, Book book) {
         try{
             List<Copy> currentList = book.getCopies();
@@ -60,6 +69,7 @@ public class BookService {
             savedBook.setIsbn(book.getAuthor());
         }
 
+        savedBook.setArchived(book.isArchived());
         bookRepo.save(savedBook);
         return savedBook;
     }
@@ -85,4 +95,5 @@ public class BookService {
         Book book = bookRepo.findById(id).get();
         return copyRepository.findCopyByBook(book);
     }
+
 }
