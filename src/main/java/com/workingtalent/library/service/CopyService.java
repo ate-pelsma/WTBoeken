@@ -33,16 +33,17 @@ public class CopyService {
         return copy;
     }
 
+    public Copy toggleActiveCopy(long id) {
+        Copy copy = copyRepository.findById(id).get();
+        copy.setInactive(!copy.isInactive());
+        copyRepository.save(copy);
+        return copy;
+    }
+
     public Copy updateCopy(Copy copy, long id){
 
         Copy existingCopy = findById(id);
-        if(copy.isLoaned()){
-            existingCopy.setLoaned(copy.isLoaned());
-        }
-        if(copy.isInactive()){
-            existingCopy.setLoaned(copy.isInactive());
-        }
-
+        existingCopy.setInactive(copy.isInactive());
         copyRepository.save(existingCopy);
         return existingCopy;
     }
