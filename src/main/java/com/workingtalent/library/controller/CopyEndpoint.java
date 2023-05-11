@@ -32,6 +32,11 @@ public class CopyEndpoint {
         return new ResponseEntity<>(copyService.updateCopy(copy, id), HttpStatus.OK);
     }
 
+    @PutMapping("/inactive/{id}")
+    public ResponseEntity<Copy> toggleActiveCopy(@PathVariable long id){
+        return new ResponseEntity<Copy>(copyService.toggleActiveCopy(id), HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete/{id}")
     public void deleteCopy(@PathVariable long id){
         copyService.deleteCopy(id);

@@ -6,8 +6,6 @@ import com.workingtalent.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -28,6 +26,12 @@ public class BookEndpoint {
     public ResponseEntity<Book> updateBook(@PathVariable long id, @RequestBody Book book){
         Book savedBook = bookService.findById(id).get();
         return new ResponseEntity<Book>(bookService.updateBook(savedBook, book), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/add/{id}")
+    public ResponseEntity<Book> addCopyToBook(@PathVariable long id){
+        Book savedBook = bookService.findById(id).get();
+        return new ResponseEntity<Book>(bookService.addCopyToBook(savedBook), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
