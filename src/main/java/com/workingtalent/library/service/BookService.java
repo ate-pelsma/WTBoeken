@@ -84,7 +84,7 @@ public class BookService {
 
     public long getCopyCount(long id) {
         Book book = bookRepo.findById(id).get();
-        return copyRepository.bookCopyCount(book);
+        return copyRepository.countByBookAndInactiveIsFalse(book);
     }
 
     public void deleteBook(long id) {
@@ -93,7 +93,7 @@ public class BookService {
 
     public Iterable<Copy> findAllCopies(long id) {
         Book book = bookRepo.findById(id).get();
-        return copyRepository.findCopyByBook(book);
+        return copyRepository.findByBook(book);
     }
 
 }

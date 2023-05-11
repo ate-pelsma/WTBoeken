@@ -1,8 +1,5 @@
 package com.workingtalent.library.utils;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,7 +10,9 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.workingtalent.library.entities.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtUtils implements Serializable{
@@ -61,9 +60,8 @@ public class JwtUtils implements Serializable{
     	return claimsResolver.apply(claims);
     }
     
-	@SuppressWarnings("deprecation")
 	private Claims getAllClaimsFromToken(String token) {
-    	return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+    	return Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody();
     }
 	
 	private Boolean isTokenExpired(String token) {

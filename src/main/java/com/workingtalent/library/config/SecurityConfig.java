@@ -1,10 +1,9 @@
 package com.workingtalent.library.config;
 
-import com.workingtalent.library.service.JpaUserDetailsService;
-import com.workingtalent.library.utils.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,8 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.workingtalent.library.service.JpaUserDetailsService;
+import com.workingtalent.library.utils.JwtFilter;
 
 @EnableWebSecurity
 @Configuration
@@ -64,11 +64,4 @@ public class SecurityConfig{
         return new BCryptPasswordEncoder();
     }
 
-    @Configuration
-    public class WebConfig implements WebMvcConfigurer{
-        @Override
-        public void addCorsMappings(CorsRegistry registry) {
-            registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowedMethods("*");
-        }
-    }
 }
