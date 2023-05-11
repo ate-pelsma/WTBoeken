@@ -48,9 +48,9 @@ public class UserService {
 
 	public void inactiveUser(User user) {
 		user.setName("");
-		user.setUsername("");
+		//user.setUsername("");
 		user.setPassword("");
-		user.setPermissions("0");
+		user.setPermissions("");
 		userRepo.save(user);
 	}
 
