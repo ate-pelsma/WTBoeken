@@ -1,5 +1,7 @@
 package com.workingtalent.library.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,7 @@ public class CopyService {
         return copy;
     }
 
-    public Iterable<Copy> findAll(){
+    public List<Copy> findAll(){
         return copyRepository.findAll();
     }
 

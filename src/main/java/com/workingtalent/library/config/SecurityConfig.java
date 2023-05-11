@@ -48,7 +48,7 @@ public class SecurityConfig{
                 .authorizeHttpRequests( auth -> auth
                         //Everyone can visit the start page ("/"), all other pages require a log in.
                         .requestMatchers("/login").permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .csrf(csrf -> csrf.disable())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 //Load login request

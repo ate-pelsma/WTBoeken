@@ -1,5 +1,8 @@
 package com.workingtalent.library.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.workingtalent.library.dto.CopyDto;
+import com.workingtalent.library.dto.SaveCopyDto;
 import com.workingtalent.library.entities.Copy;
 import com.workingtalent.library.service.CopyService;
 
@@ -22,9 +27,14 @@ public class CopyEndpoint {
     @Autowired
     CopyService copyService;
 
-    @PostMapping("/save/{bookId}")
-    public ResponseEntity<Copy> saveCopy(@RequestBody Copy copy, @PathVariable long bookId) {
-        return new ResponseEntity<>(copyService.saveCopy(copy, bookId), HttpStatus.CREATED);
+    @PostMapping("/save")
+    public Copy saveCopy(@RequestBody SaveCopyDto saveCopyDto) {
+    	Copy copy = new Copy();
+    	copy.setCopyNumber(saveCopyDto.getCopyNumber());
+    	copy.setInactive(saveCopyDto.isInactive());
+    	copy.setLoaned(saveCopyDto.isLoaned());
+    	
+    	return copyService.saveCopy(copy, saveCopyDto.getBookId());
     }
 
     @PutMapping("/update/{id}")
@@ -43,7 +53,34 @@ public class CopyEndpoint {
     }
 
     @GetMapping("/all")
-    public Iterable<Copy> findAll(){
-        return copyService.findAll();
+    public Iterable<CopyDto> findAll(){
+//		OOP     	
+//    	Iterable<Copy> copieen = copyService.findAll();
+//        
+//        List<CopyDto> copyDtos = new ArrayList<>();
+//        
+//        for (Copy copy : copieen) {
+//        	CopyDto copyDto = new CopyDto();
+//        	copyDto.setId(copy.getId());
+//        	copyDto.setCopyNumber(copy.getCopyNumber());
+//        	copyDto.setInactive(copy.isInactive());
+//        	copyDto.setLoaned(copy.isLoaned());
+//        	copyDto.setBookTitle(copy.getBook().getTitle());
+//        	
+//        	copyDtos.add(copyDto);
+//        }
+//        
+//        return copyDtos;
+        
+    	// Functional programming manier
+        return copyService.findAll().stream().map(copy -> {
+        	CopyDto copyDto = new CopyDto();
+        	copyDto.setId(copy.getId());
+        	copyDto.setCopyNumber(copy.getCopyNumber());
+        	copyDto.setInactive(copy.isInactive());
+        	copyDto.setLoaned(copy.isLoaned());
+        	copyDto.setBookTitle(copy.getBook().getTitle());
+        	return copyDto;
+        }).toList();
     }
 }
