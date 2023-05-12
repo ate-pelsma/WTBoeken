@@ -46,12 +46,13 @@ public class UserService {
 		userRepo.save(oldUser);
 	}
 
-	public void inactiveUser(User user) {
+	public User inactiveUser(User user) {
 		user.setName("");
 		//user.setUsername("");
 		user.setPassword("");
 		user.setPermissions("ROLE_USER");
 		userRepo.save(user);
+		return user;
 	}
 
 	public Optional<User> findById(long id) {
