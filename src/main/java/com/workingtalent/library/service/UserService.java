@@ -50,8 +50,12 @@ public class UserService {
 		user.setName("");
 		//user.setUsername("");
 		user.setPassword("");
-		user.setPermissions("");
+		user.setPermissions("ROLE_USER");
 		userRepo.save(user);
+	}
+
+	public Optional<User> findById(long id) {
+		return userRepo.findById(id);
 	}
 
 }
