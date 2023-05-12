@@ -48,10 +48,14 @@ public class UserService {
 
 	public void inactiveUser(User user) {
 		user.setName("");
-		user.setUsername("");
+		//user.setUsername("");
 		user.setPassword("");
-		user.setPermissions("0");
+		user.setPermissions("ROLE_USER");
 		userRepo.save(user);
+	}
+
+	public Optional<User> findById(long id) {
+		return userRepo.findById(id);
 	}
 
 }

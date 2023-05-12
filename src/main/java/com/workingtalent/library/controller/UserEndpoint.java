@@ -1,11 +1,10 @@
 package com.workingtalent.library.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.workingtalent.library.config.SecurityConfig;
 import com.workingtalent.library.entities.User;
-import com.workingtalent.library.repository.IUserRepository;
 import com.workingtalent.library.service.UserService;
 
 @CrossOrigin(maxAge=3600)
@@ -33,10 +30,10 @@ public class UserEndpoint {
 		return userService.findAll();
 	}
 	
-//	@GetMapping("/user")
-//	public User findById(@PathVariable("id") User user) {
-//		return user;
-//	}
+	@GetMapping("/{id}")
+	public Optional<User> findById(@PathVariable long id) {
+		return userService.findById(id);
+	}
 	
 	@PostMapping("/save")
 	public ResponseEntity<Object> saveUser(@RequestBody User user) {
