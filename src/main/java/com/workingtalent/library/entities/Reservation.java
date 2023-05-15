@@ -63,4 +63,12 @@ public class Reservation {
 		this.book = book;
 	}
 
+	public ReservationStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ReservationStatus status) {
+		this.status = status;
+	}
+
 }

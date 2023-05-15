@@ -1,19 +1,18 @@
 package com.workingtalent.library.service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.workingtalent.library.dto.ReservationDto;
 import com.workingtalent.library.entities.Book;
 import com.workingtalent.library.entities.Reservation;
 import com.workingtalent.library.entities.User;
-import com.workingtalent.library.repository.IBookRepository;
 import com.workingtalent.library.repository.IReservationRepository;
-import com.workingtalent.library.repository.IUserRepository;
 
 @Service
 public class ReservationService {
@@ -40,5 +39,24 @@ public class ReservationService {
 		}
 
 		
+	}
+	
+	public List<ReservationDto> findAll() {
+		Iterable<Reservation> reservations = reservationRepo.findAll();
+		List<ReservationDto> reservationDtos = new ArrayList<>();
+		for(Reservation reservation: reservations) {
+			reservationDtos.add(convertToDto(reservation));
+		}
+		return reservationDtos;
+	}
+
+	private ReservationDto convertToDto(Reservation reservation) {
+		ReservationDto reservationDto = new ReservationDto();
+		reservationDto.setId(reservation.getId());
+		reservationDto.setReqDate(reservation.getReqDate());
+		reservationDto.setStatus(reservation.getStatus());
+		reservationDto.setBookid(reservation.getBook().getId());
+		reservationDto.setUserid(reservation.getUser().getId());
+		return reservationDto;
 	}
 }
