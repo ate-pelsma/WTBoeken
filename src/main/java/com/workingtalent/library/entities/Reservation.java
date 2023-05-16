@@ -62,5 +62,13 @@ public class Reservation {
 	public void setBook(Book book) {
 		this.book = book;
 	}
+	
+	public ReservationStatus getStatus() {
+		return status;
+	}
+	
+	public void setStatus(ReservationStatus status) {
+		this.status = status;
+	}
 
 }
