@@ -37,8 +37,6 @@ public class ReservationService {
 		} else {
 			throw new IllegalArgumentException("Book not found");
 		}
-
-		
 	}
 	
 	public List<ReservationDto> findAll() {

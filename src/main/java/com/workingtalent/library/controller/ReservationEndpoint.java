@@ -27,7 +27,6 @@ public class ReservationEndpoint {
 	@PostMapping("/save")
 	public ResponseEntity<?> saveReservation(@RequestBody Long bookId, @AuthenticationPrincipal User user)
 	{
-		System.out.println(bookId);
 		Reservation newReservation = reservationService.saveReservation(bookId, user);
 		return ResponseEntity.ok(newReservation);
 	}

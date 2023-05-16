@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @RestController
@@ -57,5 +58,11 @@ public class BookEndpoint {
     @GetMapping("/count/{id}")
     public long getCopyCount(@PathVariable long id){
         return bookService.getCopyCount(id);
+    }
+    
+    
+    @GetMapping("/{id}/copy/available")
+    public Collection<Copy> findAvailableCopies(@PathVariable long id){
+    	return bookService.findAvailableCopies(id);
     }
 }
