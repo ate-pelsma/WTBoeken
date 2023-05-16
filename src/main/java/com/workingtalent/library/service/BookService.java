@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,6 +95,12 @@ public class BookService {
     public Iterable<Copy> findAllCopies(long id) {
         Book book = bookRepo.findById(id).get();
         return copyRepository.findByBook(book);
+    }
+    
+    public Collection<Copy> findAvailableCopies(long id) {
+        Book book = bookRepo.findById(id).get();
+        return copyRepository.findAvailableCopies(book);
+        
     }
 
 }

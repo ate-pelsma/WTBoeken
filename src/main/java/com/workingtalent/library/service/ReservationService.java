@@ -38,7 +38,9 @@ public class ReservationService {
 		} else {
 			throw new IllegalArgumentException("Book not found");
 		}
-
-		
+	}
+	
+	public Optional<Reservation> findReservation(long id) {
+		return reservationRepo.findById(id);
 	}
 }
