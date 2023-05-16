@@ -9,8 +9,22 @@ public class ReservationDto {
 	private LocalDate reqDate;
 	private ReservationStatus status;
 	private long bookid;
+	private String bookTitle;
 	private long userid;
+	private String userName;
 	
+	public String getBookTitle() {
+		return bookTitle;
+	}
+	public void setBookTitle(String bookTitle) {
+		this.bookTitle = bookTitle;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public long getId() {
 		return id;
 	}

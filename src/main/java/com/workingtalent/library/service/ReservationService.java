@@ -49,6 +49,12 @@ public class ReservationService {
 		}
 		return reservationDtos;
 	}
+	
+	public ReservationDto findReservation(long id) {
+		Reservation reservation = reservationRepo.findById(id).get();
+		ReservationDto reservationDto = convertToDto(reservation);
+		return reservationDto;
+	}
 
 	private ReservationDto convertToDto(Reservation reservation) {
 		ReservationDto reservationDto = new ReservationDto();
@@ -56,7 +62,9 @@ public class ReservationService {
 		reservationDto.setReqDate(reservation.getReqDate());
 		reservationDto.setStatus(reservation.getStatus());
 		reservationDto.setBookid(reservation.getBook().getId());
+		reservationDto.setBookTitle(reservation.getBook().getTitle());
 		reservationDto.setUserid(reservation.getUser().getId());
+		reservationDto.setUserName(reservation.getUser().getName());
 		return reservationDto;
 	}
 }
