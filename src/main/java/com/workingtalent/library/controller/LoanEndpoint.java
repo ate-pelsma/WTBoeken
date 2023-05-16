@@ -27,6 +27,6 @@ public class LoanEndpoint {
 	{
 		Loan loan = new Loan();
 		loan.setStartDate(LocalDate.now());
-		loanService.saveLoan(loan, user, copy);
+		loanService.saveLoan(loan, user.getId(), copy.getId());
 	}
 }

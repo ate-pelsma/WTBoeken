@@ -49,9 +49,9 @@ public class ReservationService {
 	}
 	
 	public ReservationDto findReservation(long id) {
-		Reservation reservation = reservationRepo.findById(id).get();
-		ReservationDto reservationDto = convertToDto(reservation);
-		return reservationDto;
+		Reservation reservation = reservationRepo.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
+		return convertToDto(reservation);
 	}
 
 	private ReservationDto convertToDto(Reservation reservation) {
