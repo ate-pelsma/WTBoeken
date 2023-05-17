@@ -4,6 +4,8 @@ public class CopyDto {
 
     private long id;
 
+    private long copyId;
+
     private int copyNumber;
 
     private long bookId;
@@ -11,6 +13,14 @@ public class CopyDto {
     private String bookTitle;
     private String bookAuthor;
     private String bookIsbn;
+
+    public long getCopyId() {
+        return copyId;
+    }
+
+    public void setCopyId(long copyId) {
+        this.copyId = copyId;
+    }
 
     public long getBookId() {
         return bookId;
