@@ -13,6 +13,15 @@ public class CopyDto {
     private String bookTitle;
     private String bookAuthor;
     private String bookIsbn;
+    private String activeLoanName;
+
+    public String getActiveLoanName() {
+        return activeLoanName;
+    }
+
+    public void setActiveLoanName(String activeLoanName) {
+        this.activeLoanName = activeLoanName;
+    }
 
     public long getCopyId() {
         return copyId;
