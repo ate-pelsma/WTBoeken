@@ -71,12 +71,4 @@ public class Reservation {
 		this.status = status;
 	}
 
-	public ReservationStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(ReservationStatus status) {
-		this.status = status;
-	}
-
 }
