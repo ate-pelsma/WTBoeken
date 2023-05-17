@@ -1,6 +1,6 @@
 package com.workingtalent.library.controller;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,15 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.workingtalent.library.dto.ReservationDto;
 import com.workingtalent.library.entities.Reservation;
 import com.workingtalent.library.entities.User;
 import com.workingtalent.library.service.ReservationService;
 
-import com.workingtalent.library.dto.ReservationDto;
-
-
 @RestController
-@RequestMapping("/reservations")
+@RequestMapping("/reservation")
 public class ReservationEndpoint {
 	@Autowired
 	private ReservationService reservationService;
@@ -32,16 +30,13 @@ public class ReservationEndpoint {
 		return ResponseEntity.ok(newReservation);
 	}
 	
-    @GetMapping("/{id}")
-    public Optional<ReservationDto> findById(@PathVariable long id){
-    	return reservationService.findReservation(id).map(reservation -> {
-    		ReservationDto reservationDto = new ReservationDto();
-    		reservationDto.setId(reservation.getId());
-    		reservationDto.setReqDate(reservation.getReqDate());
-    		reservationDto.setBook(reservation.getBook());
-    		reservationDto.setUsername(reservation.getUser().getName());
-    		reservationDto.setUserId(reservation.getUser().getId());
-    		return reservationDto;
-    	});
-    }
+	@GetMapping("/all")
+	public List<ReservationDto> findAll() {
+		return reservationService.findAll();
+	}
+	
+	@GetMapping("/{id}")
+	public ReservationDto findById(@PathVariable long id) {
+		return reservationService.findReservation(id);
+	}
 }
