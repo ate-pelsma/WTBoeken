@@ -1,19 +1,18 @@
 package com.workingtalent.library.service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.workingtalent.library.dto.ReservationDto;
 import com.workingtalent.library.entities.Book;
 import com.workingtalent.library.entities.Reservation;
 import com.workingtalent.library.entities.User;
-import com.workingtalent.library.repository.IBookRepository;
 import com.workingtalent.library.repository.IReservationRepository;
-import com.workingtalent.library.repository.IUserRepository;
 
 @Service
 public class ReservationService {
@@ -40,7 +39,30 @@ public class ReservationService {
 		}
 	}
 	
-	public Optional<Reservation> findReservation(long id) {
-		return reservationRepo.findById(id);
+	public List<ReservationDto> findAll() {
+		Iterable<Reservation> reservations = reservationRepo.findAll();
+		List<ReservationDto> reservationDtos = new ArrayList<>();
+		for(Reservation reservation: reservations) {
+			reservationDtos.add(convertToDto(reservation));
+		}
+		return reservationDtos;
+	}
+	
+	public ReservationDto findReservation(long id) {
+		Reservation reservation = reservationRepo.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
+		return convertToDto(reservation);
+	}
+
+	private ReservationDto convertToDto(Reservation reservation) {
+		ReservationDto reservationDto = new ReservationDto();
+		reservationDto.setId(reservation.getId());
+		reservationDto.setReqDate(reservation.getReqDate());
+		reservationDto.setStatus(reservation.getStatus());
+		reservationDto.setBookid(reservation.getBook().getId());
+		reservationDto.setBookTitle(reservation.getBook().getTitle());
+		reservationDto.setUserid(reservation.getUser().getId());
+		reservationDto.setUserName(reservation.getUser().getName());
+		return reservationDto;
 	}
 }

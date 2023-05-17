@@ -54,9 +54,9 @@ public class UserEndpoint {
 	}
 	
 	@GetMapping("/inactive/{userid}")
-	public void inactiveUser(@PathVariable long userid) {
+	public User inactiveUser(@PathVariable long userid) {
 		User user = userService.findUser(userid).get();
-		userService.inactiveUser(user);
+		return userService.inactiveUser(user);
 	}
 
 }
