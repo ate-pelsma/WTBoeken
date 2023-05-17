@@ -1,4 +1,4 @@
-package dto;
+package com.workingtalent.library.dto;
 
 import java.time.LocalDate;
 

@@ -1,19 +1,14 @@
 package com.workingtalent.library.controller;
 
+import com.workingtalent.library.entities.Copy;
+import com.workingtalent.library.service.CopyService;
+import com.workingtalent.library.dto.CopyDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.workingtalent.library.entities.Copy;
-import com.workingtalent.library.service.CopyService;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/copy")
@@ -45,5 +40,18 @@ public class CopyEndpoint {
     @GetMapping("/all")
     public Iterable<Copy> findAll(){
         return copyService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<CopyDto> findById(@PathVariable long id){
+        return copyService.findCopy(id).map(copy -> {
+            CopyDto copyDto = new CopyDto();
+            copyDto.setCopyNumber(copy.getCopyNumber());
+            copyDto.setBookId(copy.getBook().getId());
+            copyDto.setBookTitle(copy.getBook().getTitle());
+            copyDto.setBookAuthor(copy.getBook().getAuthor());
+            copyDto.setBookIsbn(copy.getBook().getIsbn());
+            return copyDto;
+        });
     }
 }

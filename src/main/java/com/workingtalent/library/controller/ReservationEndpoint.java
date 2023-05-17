@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.workingtalent.library.entities.Copy;
 import com.workingtalent.library.entities.Reservation;
 import com.workingtalent.library.entities.User;
 import com.workingtalent.library.service.ReservationService;
 
-import dto.ReservationDto;
+import com.workingtalent.library.dto.ReservationDto;
 
 
 @RestController
