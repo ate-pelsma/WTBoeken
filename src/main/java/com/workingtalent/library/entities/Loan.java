@@ -1,15 +1,9 @@
 package com.workingtalent.library.entities;
 
-import java.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import java.time.LocalDate;
 
 @Entity
 public class Loan {
@@ -28,7 +22,16 @@ public class Loan {
 	@JsonIgnore
 	@ManyToOne(optional = false)
 	private Copy copy;
-	
+
+	public Loan(){
+	}
+
+	public Loan(Copy copy, User user){
+		this.startDate = LocalDate.now();
+		this.user = user;
+		this.copy = copy;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -51,5 +54,21 @@ public class Loan {
 
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Copy getCopy() {
+		return copy;
+	}
+
+	public void setCopy(Copy copy) {
+		this.copy = copy;
 	}
 }

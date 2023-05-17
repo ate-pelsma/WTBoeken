@@ -46,6 +46,7 @@ public class CopyEndpoint {
     public Optional<CopyDto> findById(@PathVariable long id){
         return copyService.findCopy(id).map(copy -> {
             CopyDto copyDto = new CopyDto();
+            copyDto.setCopyId(copy.getId());
             copyDto.setCopyNumber(copy.getCopyNumber());
             copyDto.setBookId(copy.getBook().getId());
             copyDto.setBookTitle(copy.getBook().getTitle());
