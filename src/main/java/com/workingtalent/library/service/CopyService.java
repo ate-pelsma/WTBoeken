@@ -8,6 +8,8 @@ import com.workingtalent.library.entities.Copy;
 import com.workingtalent.library.repository.IBookRepository;
 import com.workingtalent.library.repository.ICopyRepository;
 
+import java.util.Optional;
+
 @Service
 public class CopyService {
 
@@ -50,5 +52,9 @@ public class CopyService {
 
     public void deleteCopy(long id) {
         copyRepository.deleteById(id);
+    }
+
+    public Optional<Copy> findCopy(long id) {
+        return copyRepository.findById(id);
     }
 }
