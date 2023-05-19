@@ -82,6 +82,15 @@ public class LoanService {
 		return convertToDto(loan);
 	}
 	
+	public List<LoanDto> findAll() {
+		Iterable<Loan> loans = loanRepo.findAll();
+		List<LoanDto> loanDtos = new ArrayList<>();
+		for (Loan loan : loans) {
+			loanDtos.add(convertToDto(loan));
+		}
+		return loanDtos;
+	}
+	
 	public List<LoanDto> findAllFromUser(long userid) {
 		User user = userRepo.findById(userid).orElseThrow(() -> new IllegalArgumentException("User not found"));
 		List<Loan> loans = user.getLoans();
