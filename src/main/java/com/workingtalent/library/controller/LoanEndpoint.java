@@ -1,13 +1,12 @@
 package com.workingtalent.library.controller;
 
-import com.workingtalent.library.entities.Copy;
-import com.workingtalent.library.entities.Loan;
-import com.workingtalent.library.entities.User;
+import com.workingtalent.library.dto.LoanDto;
 import com.workingtalent.library.service.LoanService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/loan")
@@ -16,16 +15,24 @@ public class LoanEndpoint {
 	@Autowired
 	private LoanService loanService;
 	
-	@PostMapping("/save")
-	public void saveLoan(@RequestBody Copy copy, @RequestBody User user) 
+	@PostMapping("/save/reservation/{reservationId}/{copyId}")
+	public void saveLoanFromReservation(@PathVariable long reservationId, @PathVariable long copyId) 
 	{
-		Loan loan = new Loan();
-		loan.setStartDate(LocalDate.now());
-		loanService.saveLoan(loan, user.getId(), copy.getId());
+		loanService.saveLoanFromReservation(reservationId, copyId);
 	}
 
 	@GetMapping("/save/{copyId}/{userId}")
 	public void saveLoanDirectlyFromBook(@PathVariable long copyId, @PathVariable long userId){
 		loanService.saveLoanDirectlyFromBook(userId, copyId);
+	}
+	
+	@GetMapping("/{id}")
+	public LoanDto findById(@PathVariable long id) {
+		return loanService.findLoan(id);
+	}
+	
+	@GetMapping("/user/{userid}")
+	public List<LoanDto> findAllFromUser(@PathVariable long userid) {
+		return loanService.findAllFromUser(userid);
 	}
 }
