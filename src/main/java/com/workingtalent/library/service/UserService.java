@@ -1,13 +1,16 @@
 package com.workingtalent.library.service;
 
-import java.util.Optional;
-
+import com.workingtalent.library.controller.AuthenticationEndPoint;
+import com.workingtalent.library.dto.UserLoanDto;
+import com.workingtalent.library.dto.UserReservationDto;
+import com.workingtalent.library.entities.*;
+import com.workingtalent.library.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.workingtalent.library.controller.AuthenticationEndPoint;
-import com.workingtalent.library.entities.User;
-import com.workingtalent.library.repository.IUserRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -59,4 +62,31 @@ public class UserService {
 		return userRepo.findById(id);
 	}
 
+    public Iterable<UserReservationDto> getPendingReservationsForUser(User user) {
+		List<Reservation> reservationList = user.getReservations();
+		List<UserReservationDto> userReservations = new ArrayList<>();
+		for(Reservation res : reservationList){
+			if(res.getStatus() == ReservationStatus.PENDING){
+				UserReservationDto reservationDto = new UserReservationDto(res.getId(), res.getReqDate(), res.getBook().getTitle(), res.getBook().getAuthor(), res.getBook().getIsbn());
+				userReservations.add(reservationDto);
+			}
+		}
+		return userReservations;
+    }
+
+	public Iterable<UserLoanDto> getLoansForUser(User user) {
+		List<Loan> loanList = user.getLoans();
+		List<UserLoanDto> userLoans = new ArrayList<>();
+		for(Loan loan : loanList){
+			Book book = loan.getCopy().getBook();
+			UserLoanDto loanDto;
+			if(loan.getEndDate() == null){
+				loanDto = new UserLoanDto(book.getImage(), book.getTitle(), book.getAuthor(), book.getIsbn(), loan.getStartDate());
+			} else {
+				loanDto = new UserLoanDto(book.getImage(), book.getTitle(), book.getAuthor(), book.getIsbn(), loan.getStartDate(), loan.getEndDate());
+			}
+			userLoans.add(loanDto);
+		}
+		return userLoans;
+	}
 }
