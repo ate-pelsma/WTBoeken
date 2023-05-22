@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(maxAge=3600)
@@ -55,12 +56,12 @@ public class UserEndpoint {
 	}
 
 	@GetMapping("/reservations")
-	public Iterable<UserReservationDto> getPendingReservationsForUser(@AuthenticationPrincipal User user){
+	public List<UserReservationDto> getPendingReservationsForUser(@AuthenticationPrincipal User user){
 		return userService.getPendingReservationsForUser(user);
 	}
 
 	@GetMapping("/loans")
-	public Iterable<UserLoanDto> getLoansForUser(@AuthenticationPrincipal User user){
+	public List<UserLoanDto> getLoansForUser(@AuthenticationPrincipal User user){
 		return userService.getLoansForUser(user);
 	}
 }

@@ -62,8 +62,9 @@ public class UserService {
 		return userRepo.findById(id);
 	}
 
-    public Iterable<UserReservationDto> getPendingReservationsForUser(User user) {
-		List<Reservation> reservationList = user.getReservations();
+    public List<UserReservationDto> getPendingReservationsForUser(User user) {
+		User realUser = userRepo.findById(user.getId()).get();
+		Iterable<Reservation> reservationList = realUser.getReservations();
 		List<UserReservationDto> userReservations = new ArrayList<>();
 		for(Reservation res : reservationList){
 			if(res.getStatus() == ReservationStatus.PENDING){
@@ -74,8 +75,9 @@ public class UserService {
 		return userReservations;
     }
 
-	public Iterable<UserLoanDto> getLoansForUser(User user) {
-		List<Loan> loanList = user.getLoans();
+	public List<UserLoanDto> getLoansForUser(User user) {
+		User realUser = userRepo.findById(user.getId()).get();
+		Iterable<Loan> loanList = realUser.getLoans();
 		List<UserLoanDto> userLoans = new ArrayList<>();
 		for(Loan loan : loanList){
 			Book book = loan.getCopy().getBook();
