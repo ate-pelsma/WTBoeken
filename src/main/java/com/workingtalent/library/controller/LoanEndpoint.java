@@ -40,4 +40,9 @@ public class LoanEndpoint {
 	public List<LoanDto> findAllFromUser(@PathVariable long userid) {
 		return loanService.findAllFromUser(userid);
 	}
+	
+	@GetMapping("/return/{id}")
+	public void returnBook(@PathVariable long id) {
+		loanService.returnBook(id);
+	}
 }

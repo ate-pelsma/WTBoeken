@@ -14,6 +14,7 @@ import com.workingtalent.library.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,6 +102,15 @@ public class LoanService {
 		return loanDtos;
 	}
 	
+	public void returnBook(long id) {
+		Loan loan = loanRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Loan not found"));
+		loan.setEndDate(LocalDate.now());
+		Copy copy = loan.getCopy();
+		copy.setLoaned(false);
+		copyRepo.save(copy);
+		loanRepo.save(loan);
+	}
+	
 	private LoanDto convertToDto(Loan loan) {
 		LoanDto loanDto = new LoanDto();
 		Book book = loan.getCopy().getBook();
@@ -110,6 +120,7 @@ public class LoanService {
 		loanDto.setUserid(loan.getUser().getId());
 		loanDto.setUserName(loan.getUser().getName());
 		loanDto.setCopyid(loan.getCopy().getId());
+		loanDto.setCopyNumber(loan.getCopy().getCopyNumber());
 		loanDto.setBookid(book.getId());
 		loanDto.setBookTitle(book.getTitle());
 		loanDto.setBookAuthor(book.getAuthor());

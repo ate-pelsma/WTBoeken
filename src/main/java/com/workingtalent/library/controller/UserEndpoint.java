@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.workingtalent.library.dto.UserDto;
 import com.workingtalent.library.entities.User;
 import com.workingtalent.library.service.UserService;
 
@@ -35,6 +37,11 @@ public class UserEndpoint {
 		return userService.findById(id);
 	}
 	
+	@GetMapping("/self")
+	public UserDto findSelf(@AuthenticationPrincipal User user) {
+		return userService.findSelf(user);
+	}
+	
 	@PostMapping("/save")
 	public ResponseEntity<Object> saveUser(@RequestBody User user) {
 		userService.saveUser(user);
@@ -47,10 +54,10 @@ public class UserEndpoint {
 		userService.updateUserAdmin(user, oldUser);
 	}
 	
-	@PutMapping("/update/{userid}")
-	public void updateUser(@PathVariable long userid, @RequestBody User user) {
-		User oldUser = userService.findUser(userid).get();
-		userService.updateUser(user, oldUser);
+	@PutMapping("/update")
+	public void updateUser(@RequestBody UserDto userDto) {
+		User oldUser = userService.findUser(userDto.getId()).get();
+		userService.updateUser(userDto, oldUser);
 	}
 	
 	@GetMapping("/inactive/{userid}")
