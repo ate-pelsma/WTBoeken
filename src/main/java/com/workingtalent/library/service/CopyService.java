@@ -1,6 +1,7 @@
 package com.workingtalent.library.service;
 
 import com.workingtalent.library.dto.CopyDto;
+import com.workingtalent.library.dto.LoanDto;
 import com.workingtalent.library.entities.Book;
 import com.workingtalent.library.entities.Copy;
 import com.workingtalent.library.repository.IBookRepository;
@@ -8,6 +9,7 @@ import com.workingtalent.library.repository.ICopyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -75,6 +77,22 @@ public class CopyService {
                 copyDto.setActiveLoanName("");
             }
 
+            return copyDto;
+        });
+    }
+
+    public Optional<CopyDto> provideCopyDetailsForView(long id) {
+        return findCopy(id).map(copy -> {
+            Book book = copy.getBook();
+            List<LoanDto> loanDtoList = copy.getLoans().stream().map(loan -> {
+                LoanDto loanDto = new LoanDto();
+                loanDto.setId(loan.getId());
+                loanDto.setUserName(loan.getUser().getUsername());
+                loanDto.setStartDate(loan.getStartDate());
+                loanDto.setEndDate(loan.getEndDate());
+                return loanDto;
+            }).toList();
+            CopyDto copyDto = new CopyDto(id, copy.getCopyNumber(), copy.isInactive(), book.getId(), book.getTitle(), book.getAuthor(), book.getIsbn(), book.getImage(), loanDtoList);
             return copyDto;
         });
     }

@@ -1,18 +1,18 @@
 package com.workingtalent.library.service;
 
+import com.workingtalent.library.dto.ReservationDto;
+import com.workingtalent.library.entities.Book;
+import com.workingtalent.library.entities.Reservation;
+import com.workingtalent.library.entities.ReservationStatus;
+import com.workingtalent.library.entities.User;
+import com.workingtalent.library.repository.IReservationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.workingtalent.library.dto.ReservationDto;
-import com.workingtalent.library.entities.Book;
-import com.workingtalent.library.entities.Reservation;
-import com.workingtalent.library.entities.User;
-import com.workingtalent.library.repository.IReservationRepository;
 
 @Service
 public class ReservationService {
@@ -64,5 +64,12 @@ public class ReservationService {
 		reservationDto.setUserid(reservation.getUser().getId());
 		reservationDto.setUserName(reservation.getUser().getName());
 		return reservationDto;
+	}
+
+	public Reservation cancelReservation(long id) {
+		Reservation currentReservation = reservationRepo.findById(id).get();
+		currentReservation.setStatus(ReservationStatus.CANCELLED);
+		reservationRepo.save(currentReservation);
+		return currentReservation;
 	}
 }

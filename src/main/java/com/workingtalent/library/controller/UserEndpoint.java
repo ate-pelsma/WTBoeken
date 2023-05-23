@@ -1,7 +1,9 @@
 package com.workingtalent.library.controller;
 
-import java.util.Optional;
-
+import com.workingtalent.library.dto.UserLoanDto;
+import com.workingtalent.library.dto.UserReservationDto;
+import com.workingtalent.library.entities.User;
+import com.workingtalent.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.workingtalent.library.dto.UserDto;
-import com.workingtalent.library.entities.User;
-import com.workingtalent.library.service.UserService;
+
+import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(maxAge=3600)
 @RestController
@@ -66,4 +68,13 @@ public class UserEndpoint {
 		return userService.inactiveUser(user);
 	}
 
+	@GetMapping("/reservations")
+	public List<UserReservationDto> getPendingReservationsForUser(@AuthenticationPrincipal User user){
+		return userService.getPendingReservationsForUser(user);
+	}
+
+	@GetMapping("/loans")
+	public List<UserLoanDto> getLoansForUser(@AuthenticationPrincipal User user){
+		return userService.getLoansForUser(user);
+	}
 }
