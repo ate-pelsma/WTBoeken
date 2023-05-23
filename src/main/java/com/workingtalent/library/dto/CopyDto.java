@@ -1,5 +1,7 @@
 package com.workingtalent.library.dto;
 
+import java.util.List;
+
 public class CopyDto {
 
     private long id;
@@ -8,12 +10,48 @@ public class CopyDto {
 
     private int copyNumber;
 
+    private boolean inactive;
+
     private long bookId;
 
     private String bookTitle;
     private String bookAuthor;
     private String bookIsbn;
+    private String bookImage;
     private String activeLoanName;
+
+    private List<LoanDto> loanList;
+
+    public CopyDto() {
+    }
+
+    public CopyDto(long copyId, int copyNumber, boolean inactive, long bookId, String bookTitle, String bookAuthor, String bookIsbn, String bookImage, List<LoanDto> loanList) {
+        this.copyId = copyId;
+        this.copyNumber = copyNumber;
+        this.inactive = inactive;
+        this.bookId = bookId;
+        this.bookTitle = bookTitle;
+        this.bookAuthor = bookAuthor;
+        this.bookIsbn = bookIsbn;
+        this.bookImage = bookImage;
+        this.loanList = loanList;
+    }
+
+    public String getBookImage() {
+        return bookImage;
+    }
+
+    public void setBookImage(String bookImage) {
+        this.bookImage = bookImage;
+    }
+
+    public List<LoanDto> getLoanList() {
+        return loanList;
+    }
+
+    public void setLoanList(List<LoanDto> loanList) {
+        this.loanList = loanList;
+    }
 
     public String getActiveLoanName() {
         return activeLoanName;

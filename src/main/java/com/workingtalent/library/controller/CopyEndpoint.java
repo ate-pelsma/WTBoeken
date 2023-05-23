@@ -46,4 +46,9 @@ public class CopyEndpoint {
     public Optional<CopyDto> findById(@PathVariable long id){
         return copyService.findAndCreateCopyDto(id);
     }
+
+    @GetMapping("/details/{id}")
+    public Optional<CopyDto> provideDetailsForCopyView(@PathVariable long id){
+        return copyService.provideCopyDetailsForView(id);
+    }
 }
