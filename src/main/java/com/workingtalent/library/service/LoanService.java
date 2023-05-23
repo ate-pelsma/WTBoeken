@@ -14,6 +14,7 @@ import com.workingtalent.library.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +83,15 @@ public class LoanService {
 		return convertToDto(loan);
 	}
 	
+	public List<LoanDto> findAll() {
+		Iterable<Loan> loans = loanRepo.findAll();
+		List<LoanDto> loanDtos = new ArrayList<>();
+		for (Loan loan : loans) {
+			loanDtos.add(convertToDto(loan));
+		}
+		return loanDtos;
+	}
+	
 	public List<LoanDto> findAllFromUser(long userid) {
 		User user = userRepo.findById(userid).orElseThrow(() -> new IllegalArgumentException("User not found"));
 		List<Loan> loans = user.getLoans();
@@ -90,6 +100,15 @@ public class LoanService {
 			loanDtos.add(convertToDto(loan));
 		}
 		return loanDtos;
+	}
+	
+	public void returnBook(long id) {
+		Loan loan = loanRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Loan not found"));
+		loan.setEndDate(LocalDate.now());
+		Copy copy = loan.getCopy();
+		copy.setLoaned(false);
+		copyRepo.save(copy);
+		loanRepo.save(loan);
 	}
 	
 	private LoanDto convertToDto(Loan loan) {
@@ -101,6 +120,7 @@ public class LoanService {
 		loanDto.setUserid(loan.getUser().getId());
 		loanDto.setUserName(loan.getUser().getName());
 		loanDto.setCopyid(loan.getCopy().getId());
+		loanDto.setCopyNumber(loan.getCopy().getCopyNumber());
 		loanDto.setBookid(book.getId());
 		loanDto.setBookTitle(book.getTitle());
 		loanDto.setBookAuthor(book.getAuthor());

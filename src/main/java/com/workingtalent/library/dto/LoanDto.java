@@ -11,6 +11,7 @@ public class LoanDto {
 	private String userName;
 	
 	private long copyid;
+	private long copyNumber;
 	
 	private long bookid;
 	private String bookTitle;
@@ -22,6 +23,12 @@ public class LoanDto {
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	public long getCopyNumber() {
+		return copyNumber;
+	}
+	public void setCopyNumber(long copyNumber) {
+		this.copyNumber = copyNumber;
 	}
 	public LocalDate getStartDate() {
 		return startDate;

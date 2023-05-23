@@ -26,6 +26,11 @@ public class LoanEndpoint {
 		loanService.saveLoanDirectlyFromBook(userId, copyId);
 	}
 	
+	@GetMapping("/all")
+	public List<LoanDto> findAll() {
+		return loanService.findAll();
+	}
+	
 	@GetMapping("/{id}")
 	public LoanDto findById(@PathVariable long id) {
 		return loanService.findLoan(id);
@@ -34,5 +39,10 @@ public class LoanEndpoint {
 	@GetMapping("/user/{userid}")
 	public List<LoanDto> findAllFromUser(@PathVariable long userid) {
 		return loanService.findAllFromUser(userid);
+	}
+	
+	@GetMapping("/return/{id}")
+	public void returnBook(@PathVariable long id) {
+		loanService.returnBook(id);
 	}
 }
