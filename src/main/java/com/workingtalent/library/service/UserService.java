@@ -36,6 +36,7 @@ public class UserService {
 	}
 	
 	public void updateUser(UserDto user, User oldUser) {
+		System.out.println(user.getPassword());
 		if (!user.getName().equals("")) oldUser.setName((user.getName()));
 		if (!user.getPassword().equals("")) oldUser.setPassword(autenticationEndPoint.passwordEncoder.encode(user.getPassword()));
 		if (!user.getUsername().equals("")) oldUser.setUsername((user.getUsername()));
