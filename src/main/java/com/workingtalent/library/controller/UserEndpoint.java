@@ -1,5 +1,6 @@
 package com.workingtalent.library.controller;
 
+import com.workingtalent.library.dto.UserDto;
 import com.workingtalent.library.dto.UserLoanDto;
 import com.workingtalent.library.dto.UserReservationDto;
 import com.workingtalent.library.entities.User;
@@ -8,15 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.workingtalent.library.dto.UserDto;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -63,9 +56,11 @@ public class UserEndpoint {
 	}
 	
 	@GetMapping("/inactive/{userid}")
-	public User inactiveUser(@PathVariable long userid) {
+	public ResponseEntity<?> inactiveUser(@PathVariable long userid, @AuthenticationPrincipal User loggedInUser) {
 		User user = userService.findUser(userid).get();
-		return userService.inactiveUser(user);
+		if(loggedInUser.getId() != user.getId()){
+			return ResponseEntity.ok(userService.inactiveUser(user));
+		} else throw new IllegalArgumentException("You can't inactivate your own account");
 	}
 
 	@GetMapping("/reservations")
