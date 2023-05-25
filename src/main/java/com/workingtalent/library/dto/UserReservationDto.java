@@ -9,15 +9,25 @@ public class UserReservationDto {
     private String bookTitle;
     private String bookAuthor;
     private String bookIsbn;
+    private long bookId;
 
     public UserReservationDto(){}
 
-    public UserReservationDto(long id, LocalDate date, String title, String author, String isbn){
+    public UserReservationDto(long id, LocalDate date, String title, String author, String isbn, long bookId){
         reservationId = id;
         this.date = date;
         bookTitle = title;
         bookAuthor = author;
         bookIsbn = isbn;
+        this.bookId = bookId;
+    }
+
+    public long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
     }
 
     public long getReservationId() {

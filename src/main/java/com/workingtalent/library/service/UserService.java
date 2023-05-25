@@ -83,7 +83,8 @@ public class UserService {
 		List<UserReservationDto> userReservations = new ArrayList<>();
 		for(Reservation res : reservationList){
 			if(res.getStatus() == ReservationStatus.PENDING){
-				UserReservationDto reservationDto = new UserReservationDto(res.getId(), res.getReqDate(), res.getBook().getTitle(), res.getBook().getAuthor(), res.getBook().getIsbn());
+				Book book = res.getBook();
+				UserReservationDto reservationDto = new UserReservationDto(res.getId(), res.getReqDate(), book.getTitle(), book.getAuthor(), book.getIsbn(), book.getId());
 				userReservations.add(reservationDto);
 			}
 		}
